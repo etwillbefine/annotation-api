@@ -10,6 +10,12 @@
     "name": "Tim Gatzemeier"
   },
   "dependencies": {
-    "annotation": "~0.1"
+    "annotation": "~0.1",
+    "express": "~4.0",
+    "body-parser": "~1.14"
+  },
+  "devDependencies": {
+    "express": "~4.0",
+    "body-parser": "~1.14"
   }
 }

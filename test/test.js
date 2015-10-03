@@ -2,6 +2,10 @@
 
 var exp = require('express');
 var app = exp();
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var server = require('http').createServer(app);
 server.listen(3400);
