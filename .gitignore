@@ -1,0 +1,10 @@
+# Node modules
+node_modules/*
+
+# IDE
+.idea
+
+# logs, tmp files
+*~
+*.tmp
+*.log

@@ -1,0 +1,15 @@
+{
+  "name": "api-annotation-builder",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "annotation-api",
+  "description": "Provides routing definition by annotations for express",
+  "keywords": [ "annotations", "api", "routing", "express" ],
+  "author": {
+    "email": "it@public-enterprise.de",
+    "name": "Tim Gatzemeier"
+  },
+  "dependencies": {
+    "annotation": "~0.1"
+  }
+}
