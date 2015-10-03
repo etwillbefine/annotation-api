@@ -6,9 +6,16 @@ You must tag your routes with `@Method("alias");`
 GET, PUT, POST, ... (you are also able to write it in lower case)
 
 `@Route("/route");`:  
-Define the URI, without the api prefix and an starting `/`.
+Define the URI, without the api prefix and an starting `/`.  
+You are able to define your routes likewise when you define routes with express.
 
-`@Payload({ ... });`:  
+`@Query({ ... });`:  
+Define the required query parameters (`?p=something`)  
+Accepts a json object, to define the validation rules.  
+Take a look to our [example](/test/sample.js)
+
+`@Body({ ... });`:  
+Define the required post parameters.  
 Accepts a json object, to define the validation rules.  
 Take a look to our [example](/test/sample.js)
 
