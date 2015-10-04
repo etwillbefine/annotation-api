@@ -1,21 +1,36 @@
 {
-  "name": "api-annotation-builder",
+  "name": "annotation-api",
   "version": "0.0.1",
   "license": "MIT",
   "main": "annotation-api",
   "description": "Provides routing definition by annotations for express",
-  "keywords": [ "annotations", "api", "routing", "express" ],
-  "author": {
-    "email": "it@public-enterprise.de",
-    "name": "Tim Gatzemeier"
-  },
+  "keywords": [
+    "annotations",
+    "api",
+    "routing",
+    "express"
+  ],
+  "author": "Tim Gatzemeier <it@public-enterprise.de>",
   "dependencies": {
-    "annotation": "~0.1",
-    "express": "~4.0",
-    "body-parser": "~1.14"
+    "annotation": "~0.1"
   },
   "devDependencies": {
     "express": "~4.0",
     "body-parser": "~1.14"
-  }
+  },
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etwillbefine/annotation-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/etwillbefine/annotation-api/issues"
+  },
+  "homepage": "https://github.com/etwillbefine/annotation-api#readme"
 }
