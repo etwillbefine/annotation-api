@@ -10,7 +10,8 @@
  * @Body({
  *  "name": { "required": true, "type": "string", "rules": { "minLength": 5, "maxLength": 25 }},
  *  "email": { "required": true, "type": "string", "rules": { "minLength": 5 }},
- *  "password": { "required": true, "type": "string", "rules": { "minLength": 8 }}
+ *  "password": { "required": true, "type": "string", "rules": { "minLength": 8 }},
+ *  "token": { "required": true, "type": "string", "rules": { "equals": "handshake" }}
  * });
  *
  * @param req

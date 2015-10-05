@@ -7,7 +7,7 @@
  */
 module.exports = function(app, routes, callback) {
 
-    var APIGenerator = require('./lib/generator');
+    var APIGenerator = require('./src/generator');
     var generator = new APIGenerator(app);
 
     generator.generate(routes, function(count) {

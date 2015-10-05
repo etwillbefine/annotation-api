@@ -1,8 +1,6 @@
 {
   "name": "annotation-api",
-  "version": "0.0.1",
-  "license": "MIT",
-  "main": "annotation-api",
+  "version": "0.0.4",
   "description": "Provides routing definition by annotations for express",
   "keywords": [
     "annotations",
