@@ -3,8 +3,7 @@ const NUMBER_TYPE = 'number';
 const OBJECT_TYPE = 'object';
 const ARRAY_TYPE = 'array';
 
-const MIN_LENGTH = 'minLength';
-const MAX_LENGTH = 'maxLength';
+var getFilter = require('./filter')();
 
 function APIPayloadParser() {
     "use strict";
@@ -17,7 +16,7 @@ function APIPayloadParser() {
      * @param {string} method
      * @return {ParserResponse}
      */
-    this.parseRequest = function(expected, given, method) {
+    this.parsePayload = function(expected, given, method) {
         if (typeof given == 'undefined') {
             response.success = false;
             response.errors.push({
@@ -74,7 +73,7 @@ function APIPayloadParser() {
             return;
         }
 
-        abort = validateRules(expected.type, expected.rules, given);
+        abort = validateRules(expected.rules, given);
         if (abort === false) {
             response.errors.push({
                 error: 'invalid_content',
@@ -105,18 +104,18 @@ function APIPayloadParser() {
     };
 
     /**
-     * @param {string} type
      * @param {Array} rules
      * @param {*} given
      * @return {Boolean}
      */
-    var validateRules = function(type, rules, given) {
+    var validateRules = function(rules, given) {
         if (!rules) {
             return true;
         }
 
         for(var r in rules) {
-            var result = validateRule(type, r, rules[r], given);
+            if (!rules.hasOwnProperty(r)) continue;
+            var result = validateRule(r, rules[r], given);
 
             if (result == false) {
                 return false;
@@ -127,27 +126,18 @@ function APIPayloadParser() {
     };
 
     /**
-     * @param {string} type
      * @param {string} ruleName
-     * @param {string|number} ruleValue
+     * @param {string|number} expected
      * @param {*} given
      * @return {boolean}
      */
-    var validateRule = function(type, ruleName, ruleValue, given) {
-        switch (ruleName) {
-            case MIN_LENGTH:
-                if (type == STRING_TYPE || type == ARRAY_TYPE) {
-                    return given.length >= ruleValue;
-                }
-                break;
-            case MAX_LENGTH:
-                if (type == STRING_TYPE || type == ARRAY_TYPE) {
-                    return given.length <= ruleValue;
-                }
-                break;
-        }
+    var validateRule = function(ruleName, expected, given) {
+        /** @type {Constraint} **/
+        var constraint = getFilter(ruleName);
+        constraint.addContent(expected);
+        constraint.setValue(given);
 
-        return true;
+        return constraint.validate(constraint);
     };
 
     /**
