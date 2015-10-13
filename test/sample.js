@@ -20,3 +20,18 @@
 module.exports.testApi = function(req, res) {
     res.send('If you see this messages, then the request payload is valid.');
 };
+
+/**
+ * @Method("testGet");
+ * @HTTP("GET");
+ * @Route("/test");
+ * @Query({
+ *  "test": { "required": true, "type": "number" }
+ * });
+ *
+ * @param req
+ * @param res
+ */
+module.exports.testGet = function(req, res) {
+    res.send('ok');
+};

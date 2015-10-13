@@ -17,7 +17,8 @@ function APIPayloadParser() {
      * @return {ParserResponse}
      */
     this.parsePayload = function(expected, given, method) {
-        if (typeof given == 'undefined') {
+        console.log(given);
+        if (typeof given == 'undefined' && Object.keys(expected).length > 0) {
             response.success = false;
             response.errors.push({
                 error: 'no_payload_provided',

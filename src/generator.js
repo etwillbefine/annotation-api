@@ -6,6 +6,11 @@ var AnnotationTranslator = require('./translator');
 
 function APIGenerator(app) {
 
+    if (!app) {
+        var HTTPServer = require('./http');
+        app = new HTTPServer().getApp();
+    }
+
     var count = 0;
     var translator = new AnnotationTranslator();
 

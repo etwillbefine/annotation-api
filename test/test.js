@@ -11,7 +11,7 @@ var server = require('http').createServer(app);
 server.listen(3400);
 
 require('./../index.js')(
-    app, [ __dirname + '/sample.js' ],
+    null, [ __dirname + '/sample.js' ],
     function() {
         console.log("API compiled");
     }
