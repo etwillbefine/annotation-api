@@ -17,7 +17,6 @@ function APIPayloadParser() {
      * @return {ParserResponse}
      */
     this.parsePayload = function(expected, given, method) {
-        console.log(given);
         if (typeof given == 'undefined' && Object.keys(expected).length > 0) {
             response.success = false;
             response.errors.push({
@@ -30,11 +29,9 @@ function APIPayloadParser() {
         }
 
         for(var prop in expected) {
-            if (!expected.hasOwnProperty(prop)) {
-                continue;
+            if (expected.hasOwnProperty(prop)) {
+                parseProperty(prop, expected[prop], given[prop], method);
             }
-
-            parseProperty(prop, expected[prop], given[prop], method);
         }
 
         response.success = response.errors.length == 0;
@@ -96,9 +93,9 @@ function APIPayloadParser() {
             case NUMBER_TYPE:
                 return !isNaN(parseFloat(given)) && isFinite(given);
             case OBJECT_TYPE:
-		        return Object.prototype.toString.call(given) === '[object Array]';
+                return Object.prototype.toString.call(given) === '[object Array]';
             case ARRAY_TYPE:
-		        return typeof given == 'object';
+                return typeof given == 'object';
         }
 
         return false;

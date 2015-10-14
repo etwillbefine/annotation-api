@@ -1,6 +1,7 @@
 "use strict";
 
 var ResponsePrototype = require('./response');
+var RequestMapper = require('./mapper');
 
 /**
  * @param {number|null} port default 3000
@@ -15,9 +16,14 @@ function HTTPServer(port) {
     /** @type {Array} **/
     var stack = [];
 
+    /**
+     * @param req
+     * @param res
+     */
     function requestHandler(req, res) {
         var url = req.url.split('?')[0];
         var method = req.method.toLowerCase();
+        
         ResponsePrototype.prototype = res;
         res = new ResponsePrototype(res);
 
@@ -26,14 +32,37 @@ function HTTPServer(port) {
                 continue;
             }
 
-            var route = stack[item];
-            if (route.route == url && route.method == method) {
-                route.callback(req, res);
-                break;
+            if (handleRoute(stack[item], req, res, url, method)) {
+                return;
             }
         }
 
-        // 404
+        res.json({
+            errors: [ { error: 'route_not_found', code: 404 } ],
+            request: { route: url, method: method }
+        });
+    }
+
+    /**
+     * @param route
+     * @param req
+     * @param res
+     * @param url
+     * @param method
+     * @return {boolean}
+     */
+    function handleRoute(route, req, res, url, method) {        
+        if (route.route != url || route.method != method) {
+            return false;
+        }
+        
+        var mapper = new RequestMapper(req);
+        mapper.map();
+
+        req.body = mapper.getBody();
+        req.query = mapper.getQuery();
+        route.callable(req, res);
+        return true;
     }
 
     /**
@@ -45,7 +74,7 @@ function HTTPServer(port) {
         stack.push({
             method: method.toLowerCase(),
             route: route,
-            callback: callback
+            callable: callback
         });
     };
 
