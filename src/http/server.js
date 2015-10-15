@@ -56,12 +56,14 @@ function HTTPServer(port) {
             return false;
         }
         
-        var mapper = new RequestMapper(req);
-        mapper.map();
+        var mapper = new RequestMapper(req, method);
+        mapper.setOnFinished(function() {
+            req.body = mapper.getBody();
+            req.query = mapper.getQuery();
+            route.callable(req, res);
+        });
 
-        req.body = mapper.getBody();
-        req.query = mapper.getQuery();
-        route.callable(req, res);
+        mapper.map();
         return true;
     }
 
