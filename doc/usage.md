@@ -11,6 +11,14 @@ var annotationApi = require('annotation-api');
 annotationApi(express(), files, optionalCallback);
 ```
 
+If you want to use our custom built in web server, you should do this:  
+```js
+var files = [ __dirname + '/path/too/your/file' ];
+var annotationApi = require('annotation-api');
+
+annotationApi(null, files, optionalCallback);
+```
+
 ## Create a Route
 1. Create a new file, where you want  
 2. Define a method and export it by using `module.exports`  

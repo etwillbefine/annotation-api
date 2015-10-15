@@ -1,12 +1,13 @@
 {
   "name": "annotation-api",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Provides routing definition by annotations for express",
   "keywords": [
     "annotations",
     "api",
     "routing",
-    "express"
+    "express",
+    "web server"
   ],
   "author": "Tim Gatzemeier <it@public-enterprise.de>",
   "dependencies": {
