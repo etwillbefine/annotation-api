@@ -4,6 +4,7 @@
  * @param app express-framework
  * @param {Array} routes file-paths to routing-files
  * @param {Function|null} callback
+ * @return {APIGenerator}
  */
 module.exports = function(app, routes, callback) {
 
@@ -18,4 +19,5 @@ module.exports = function(app, routes, callback) {
         }
     });
 
+    return generator;
 };

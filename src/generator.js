@@ -62,6 +62,14 @@ function APIGenerator(app) {
         });
     };
 
+    /**
+     * returns express app or our built-in server app class HTTPApp
+     * @returns {*}
+     */
+    this.getApp = function() {
+        return app;
+    };
+
 }
 
 /**
