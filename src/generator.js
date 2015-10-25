@@ -70,6 +70,13 @@ function APIGenerator(app) {
         return app;
     };
 
+    /**
+     * @returns {string}
+    **/
+    this.getApiPrefix = function() {
+	return API_PREFIX;
+    };
+
 }
 
 /**
