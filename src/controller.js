@@ -26,7 +26,7 @@ function Controller(req, res, next) {
 
     this.respond = function() {
         var response = parser.getResponse();
-        if (response.success) {
+        if (response.success && typeof info.callable == 'function') {
             info.callable(req, res, next);
             return;
         }
