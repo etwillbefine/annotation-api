@@ -12,7 +12,7 @@ function Validator() {
         }
 
         var count = this.getContent()[0];
-        return count < constraint.getValue().length;
+        return count <= constraint.getValue().length;
     };
 
     /**
