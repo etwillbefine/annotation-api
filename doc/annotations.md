@@ -1,13 +1,14 @@
 # Annotations
 
-You must tag your routes with `@Method("alias");`
+You must tag your routes with `@Method("alias");`.   
+Use the method name as alias.
 
 `@HTTP("GET");`:  
 GET, PUT, POST, ... (you are also able to write it in lower case)
 
 `@Route("/route");`:  
 Define the URI, without the api prefix and an starting `/`.  
-You are able to define your routes likewise when you define routes with express.
+You are able to define your routes likewise when you define routes with express (if you are using express framework).
 
 `@Query({ ... });`:  
 Define the required query parameters (`?p=something`)  

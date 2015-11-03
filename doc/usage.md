@@ -25,3 +25,9 @@ annotationApi(null, files, optionalCallback);
 3. Tag the method with our annotations
 
 [See all Annotations](annotations.md)
+
+#### Use our tests
+Take a look into [`/test/test.js`](/test/test.js). 
+Change the first parameter, passed to index.js to null, if you want to use our built in web server.
+Our built in web server listen on port 3000, if you use express, you can use port 3400.
+

@@ -6,9 +6,6 @@ This module allows you, to define your routes with annotations instead of using 
 It also provides a validator, to automatically validate incoming requests. 
 You can use it with express framework. Otherwise you can use the custom (flat and fast) [built-in web server](/doc/builtinserver.md).
 
-Benchmark-Screen (the upper one uses express):  
-[here](/test/benchmark.png)
-
 Read the [Changelog](/doc/changelog.md).
 
 ## Annotations

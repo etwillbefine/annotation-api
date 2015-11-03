@@ -1,5 +1,14 @@
 # Changelog
 
+#### V.0.1.2
+New:  
+`APIGenerator` allows you, to change the api prefix at the runtime.  
+Documentation about test.js
+
+Fixes:  
+`minLength` requires string length >= (instead of >)  
+Wording in documentation
+
 #### V.0.1.1
 New:  
 `APIGenerator` accessible as return type from `require('annotation-api')(..);`

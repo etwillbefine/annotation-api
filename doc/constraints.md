@@ -1,6 +1,6 @@
 # Filters
 
-Define your filter in `@Body` or `@Query` annotation using keyword `rules`:
+Define your filter in `@Body` or `@Query` annotation using keyword `rules`:  
 `rules: { ..., ... }`
 
 - `minLength: number`  
