@@ -1,4 +1,4 @@
-const API_PREFIX = '/api';
+"use strict";
 
 var annotation = require('annotation');
 var Controller = require('./controller');
@@ -13,6 +13,7 @@ function APIGenerator(app) {
 
     var count = 0;
     var translator = new AnnotationTranslator();
+    var appPrefix = '/api';
 
     /**
      * @param {Array} routes
@@ -26,7 +27,7 @@ function APIGenerator(app) {
      * @param routeInfo {{callable: Function,route: string, query: {}, body: {}, method: string, security: null}}
      */
     var prepareRoute = function(routeInfo) {
-        var uri = API_PREFIX + routeInfo.route;
+        var uri = appPrefix + routeInfo.route;
         var method = routeInfo.method.toLowerCase();
 
         app[method](uri, function(req, res, next) {
@@ -74,7 +75,16 @@ function APIGenerator(app) {
      * @returns {string}
     **/
     this.getApiPrefix = function() {
-	return API_PREFIX;
+	    return appPrefix;
+    };
+
+    /**
+     * @param {string} newValue
+     * @returns {APIGenerator}
+     */
+    this.setApiPrefix = function(newValue) {
+        appPrefix = newValue;
+        return this;
     };
 
 }
