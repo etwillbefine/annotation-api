@@ -13,7 +13,7 @@ module.exports = function(app, routes, callback) {
     var generator = new APIGenerator(app);
 
     if (routes instanceof Array && routes.length > 0) {
-        generator.generate(routes, function (c) {console.log(c);
+        generator.generate(routes, function () {
             if (typeof callback == 'function') {
                 callback();
             }
