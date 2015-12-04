@@ -96,9 +96,9 @@ function APIPayloadParser() {
                 return Object.prototype.toString.call(given) === '[object Array]';
             case ARRAY_TYPE:
                 return typeof given == 'object';
+            default:
+                return true;
         }
-
-        return false;
     };
 
     /**
@@ -151,8 +151,18 @@ function APIPayloadParser() {
  * @constructor
  */
 function ParserResponse() {
+    "use strict";
+
     this.success = false;
     this.errors = [];
+
+    this.getErrors = function() {
+        return this.errors;
+    };
+
+    this.isSuccess = function() {
+        return this.success;
+    };
 }
 
 /**

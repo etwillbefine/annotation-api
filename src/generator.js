@@ -24,13 +24,14 @@ function APIGenerator(app) {
     };
 
     /**
-     * @param routeInfo {{callable: Function,route: string, query: {}, body: {}, method: string, security: null}}
+     * @param {ApiRoute} routeInfo
      */
     var prepareRoute = function(routeInfo) {
         var uri = appPrefix + routeInfo.route;
         var method = routeInfo.method.toLowerCase();
 
-        app[method](uri, function(req, res, next) {
+        // bind route on app
+        app[method](uri, function (req, res, next) {
             var controller = new Controller(req, res, next);
             controller.handle(method, routeInfo);
         });
@@ -41,7 +42,7 @@ function APIGenerator(app) {
      * @param {Array} routes
      * @param {Function} callback
      */
-    var resolveAPIFile = function(index, routes, callback) {
+    var resolveAPIFile = function (index, routes, callback) {
         if (index == routes.length) {
             callback(count);
             return;
@@ -52,6 +53,11 @@ function APIGenerator(app) {
             var apiFile = require(routes[index]);
 
             for(var m in comments) {
+                if (!comments.hasOwnProperty(m)) {
+                    continue;
+                }
+
+                // bind the callback on translated route
                 var routeInfo = translator.translate(comments[m]);
                 routeInfo.callable = apiFile[m];
 
@@ -65,7 +71,7 @@ function APIGenerator(app) {
 
     /**
      * returns express app or our built-in server app class HTTPApp
-     * @returns {*}
+     * @returns {*|HTTPApp}
      */
     this.getApp = function() {
         return app;
@@ -73,7 +79,7 @@ function APIGenerator(app) {
 
     /**
      * @returns {string}
-    **/
+     */
     this.getApiPrefix = function() {
 	    return appPrefix;
     };

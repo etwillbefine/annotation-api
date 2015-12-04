@@ -3,24 +3,20 @@ const QUERY_ANNOTATION = 'Query';
 const BODY_ANNOTATION = 'Body';
 const METHOD_ANNOTATION = 'HTTP';
 const SECURITY_ANNOTATION = 'Security';
+const CUSTOM_ERROR_HANDLER = 'CustomErrorHandler';
+var ApiRoute = require('./route');
 
 function AnnotationTranslator() {
     "use strict";
 
     /**
-     * @param {Array} annotations
-     * @returns {{route: string, query: {}, body: {}, method: string, security: null}}
+     * @param annotations
+     * @returns {ApiRoute}
      */
     this.translate = function(annotations) {
-        var data = {
-            route: '',
-            query: {},
-            body: {},
-            method: 'get',
-            security: null
-        };
+        var data = new ApiRoute();
 
-        for (var r in annotations) {
+        for (var r = 0; r < annotations.length; r++) {
             var comment = annotations[r];
 
             switch (comment.key) {
@@ -35,6 +31,9 @@ function AnnotationTranslator() {
                     break;
                 case METHOD_ANNOTATION:
                     data.method = comment.value;
+                    break;
+                case CUSTOM_ERROR_HANDLER:
+                    data.useCustomErrorHandler = true;
                     break;
                 case SECURITY_ANNOTATION:
                     data.security = comment.value;

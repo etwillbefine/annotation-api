@@ -5,33 +5,51 @@ var PayloadParser = require('./parser');
 function Controller(req, res, next) {
 
     var parser = new PayloadParser();
-    var info = {};
+    /** @type {ApiRoute} */
+    var request;
     var method = 'get';
 
-    this.handle = function(httpMethod, routeInfo) {
+    /**
+     * @param {string} httpMethod
+     * @param {ApiRoute} apiRoute
+     */
+    this.handle = function(httpMethod, apiRoute) {
         method = httpMethod;
-        info = routeInfo;
+        request = apiRoute;
 
         this.parseRequest();
         this.respond();
     };
 
     this.parseRequest = function() {
-        parser.parsePayload(info.query, req.query, 'get');
+        parser.parsePayload(request.query, req.query, 'get');
 
         if (method.toLowerCase() == 'post') {
-            parser.parsePayload(info.body, req.body, 'post');
+            parser.parsePayload(request.body, req.body, 'post');
         }
     };
 
     this.respond = function() {
         var response = parser.getResponse();
-        if (response.success && typeof info.callable == 'function') {
-            info.callable(req, res, next);
+        var isSuccessful = true == response.success;
+        var hasCallback = typeof request.callable == 'function';
+        if (!hasCallback) {
+            res.json(response);
             return;
         }
 
-        res.json(response);
+        if (isSuccessful) {
+            // dispatch to request callback
+            request.callable(req, res, next);
+        }
+        else if (!isSuccessful && request.useCustomErrorHandler) {
+            // dispatch to request callback, passing errors
+            request.callable(req, res, response.getErrors());
+        }
+        else {
+            // not successful and not using a custom error handler, sending error to client
+            res.json(response);
+        }
     };
 
 }
