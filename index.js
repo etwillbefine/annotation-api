@@ -1,9 +1,10 @@
 "use strict";
 
 /**
- * @param app express-framework
- * @param {Array} routes file-paths to routing-files
+ * @param app express-framework or null
+ * @param {Array|null} routes file-paths to routing-files
  * @param {Function|null} callback
+ *
  * @return {APIGenerator}
  */
 module.exports = function(app, routes, callback) {
@@ -11,13 +12,13 @@ module.exports = function(app, routes, callback) {
     var APIGenerator = require('./src/generator');
     var generator = new APIGenerator(app);
 
-    generator.generate(routes, function(count) {
-	    console.log('API initialized with ' + count + ' routes.');
-
-        if (typeof callback == 'function') {
-            callback();
-        }
-    });
+    if (routes instanceof Array && routes.length > 0) {
+        generator.generate(routes, function (c) {console.log(c);
+            if (typeof callback == 'function') {
+                callback();
+            }
+        });
+    }
 
     return generator;
 };
