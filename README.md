@@ -16,10 +16,8 @@ Read the [Changelog](/doc/changelog.md).
 [Read more](/doc/usage.md)
 
 ## Configuration
-Define your api prefix in [`APIGenerator`](/src/generator.js#L1).  
-You can also define the name of our annotations in [`AnnotationTranslator`](/src/translator.js#L1).
-
-You need to run `npm install`, before you are able to use this module.
+By default we use a prefix foreach route. You can change the prefix, using `generator.setApiPrefix('')`.  
+You have to run `npm install`, before you are able to use this module.
 
 #### Example
 Can be found [here](/test/sample.js)

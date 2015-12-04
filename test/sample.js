@@ -16,8 +16,9 @@
  *
  * @param req
  * @param res
+ * @param next if you are using express framework
  */
-module.exports.testApi = function(req, res) {
+module.exports.testApi = function(req, res, next) {
     res.send('If you see this messages, then the request payload is valid.');
 };
 
@@ -34,4 +35,27 @@ module.exports.testApi = function(req, res) {
  */
 module.exports.testGet = function(req, res) {
     res.send('ok');
+};
+
+/**
+ * @Method("testErrorHandler");
+ * @CustomErrorHandler();
+ * @HTTP("GET");
+ * @Route("/err");
+ * @Query({
+ *  "dont-pass-this-parameter": { "required": true }
+ * });
+ *
+ * @param req
+ * @param res
+ * @param errors
+ */
+module.exports.testErrorHandler = function(req, res, errors) {
+    console.log(errors);
+    if (errors instanceof Array && errors.length > 0) {
+        res.send('Something went wrong. We need the parameter ;=)');
+        return;
+    }
+
+    res.send('no errors happen, everything ok');
 };

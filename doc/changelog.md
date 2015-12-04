@@ -1,5 +1,16 @@
 # Changelog
 
+#### V.0.1.3
+New:  
+Responsibility to get errors if something went wrong. This allows you to return a customized error response.  
+New Annotation `CustomErrorHandler`  
+Updated README and usage documentation  
+Removed log when starting our generator  
+Make type definition for parameters optional 
+
+Fixes:  
+RegExp-Constraint comparing required regexp with constraint's value 
+
 #### V.0.1.2
 New:  
 `APIGenerator` allows you, to change the api prefix at the runtime.  

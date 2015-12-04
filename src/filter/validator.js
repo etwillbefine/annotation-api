@@ -36,7 +36,7 @@ function Validator() {
         var valid = '/' + constraint.getValue() + '/';
         var rgx = new RegExp(valid, 'i');
 
-        return rgx.test(constraint);
+        return rgx.test(constraint.getContent()[0]);
     };
 
     /**

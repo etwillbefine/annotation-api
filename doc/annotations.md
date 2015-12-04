@@ -20,6 +20,10 @@ Define the required post parameters.
 Accepts a json object, to define the validation rules.  
 Take a look to our [example](/test/sample.js)
 
+`@CustomErrorHandler();`:  
+If you add this annotation to your route definition, you will get a list of errors as the third parameter from your callback. 
+In this case our controller will not reject the request. Feel free to send a customized response.
+
 `@Security("");`:  
 Coming soon
 
