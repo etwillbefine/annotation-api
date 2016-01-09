@@ -1,8 +1,7 @@
-# Node modules
+# modules
 node_modules/*
-
-# IDE
 .idea
+typings
 
 # logs, tmp files
 *~

@@ -21,3 +21,6 @@ You have to run `npm install`, before you are able to use this module.
 
 #### Example
 Can be found [here](/test/sample.js)
+
+#### Tests
+Execute the tests, using `npm test`.

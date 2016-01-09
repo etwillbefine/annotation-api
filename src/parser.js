@@ -30,7 +30,7 @@ function APIPayloadParser() {
 
         for(var prop in expected) {
             if (expected.hasOwnProperty(prop)) {
-                parseProperty(prop, expected[prop], given[prop], method);
+                this.parseProperty(prop, expected[prop], given[prop], method);
             }
         }
 
@@ -44,7 +44,7 @@ function APIPayloadParser() {
      * @param {string} method
      * @param {*} given
      */
-    var parseProperty = function(prop, expected, given, method) {
+    this.parseProperty = function(prop, expected, given, method) {
         var isParameterEmpty = typeof given == 'undefined' || given === '';
 
         if (isParameterEmpty && expected.required === false) {
@@ -61,7 +61,7 @@ function APIPayloadParser() {
             return;
         }
 
-        var abort = validateType(expected.type, given);
+        var abort = this.validateType(expected.type, given);
         if (abort === false) {
             response.errors.push({
                 error: 'invalid_type',
@@ -71,7 +71,7 @@ function APIPayloadParser() {
             return;
         }
 
-        abort = validateRules(expected.rules, given);
+        abort = this.validateRules(expected.rules, given);
         if (abort === false) {
             response.errors.push({
                 error: 'invalid_content',
@@ -86,15 +86,15 @@ function APIPayloadParser() {
      * @param {*} given
      * @return {Boolean}
      */
-    var validateType = function(expected, given) {
+    this.validateType = function(expected, given) {
         switch (expected) {
             case STRING_TYPE:
                 return typeof given == 'string';
             case NUMBER_TYPE:
                 return !isNaN(parseFloat(given)) && isFinite(given);
-            case OBJECT_TYPE:
-                return Object.prototype.toString.call(given) === '[object Array]';
             case ARRAY_TYPE:
+                return Object.prototype.toString.call(given) === '[object Array]';
+            case OBJECT_TYPE:
                 return typeof given == 'object';
             default:
                 return true;
@@ -102,20 +102,22 @@ function APIPayloadParser() {
     };
 
     /**
-     * @param {Array} rules
+     * @param {{}} rules
      * @param {*} given
      * @return {Boolean}
      */
-    var validateRules = function(rules, given) {
-        if (!rules) {
+    this.validateRules = function(rules, given) {
+        if (!rules || Object.keys(rules).length < 1) {
             return true;
         }
 
         for(var r in rules) {
-            if (!rules.hasOwnProperty(r)) continue;
-            var result = validateRule(r, rules[r], given);
+            if (!rules.hasOwnProperty(r)) {
+                continue;
+            }
 
-            if (result == false) {
+            var valid = this.validateRule(r, rules[r], given);
+            if (!valid) {
                 return false;
             }
         }
@@ -129,11 +131,11 @@ function APIPayloadParser() {
      * @param {*} given
      * @return {boolean}
      */
-    var validateRule = function(ruleName, expected, given) {
+    this.validateRule = function(ruleName, expected, given) {
         /** @type {Constraint} **/
         var constraint = getFilter(ruleName);
-        constraint.addContent(expected);
-        constraint.setValue(given);
+        constraint.addContent(given);
+        constraint.setValue(expected);
 
         return constraint.validate(constraint);
     };

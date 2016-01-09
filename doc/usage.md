@@ -18,8 +18,8 @@ If you want to use our custom built in web server, you can use this:
 var files = [ __dirname + '/path/too/your/file' ];
 var annotationApi = require('annotation-api');
 
-var generator = annotationApi();
-generator.setApiPrefix('/my-api');
+var generator = annotationApi(null, files, '/endpoint1');
+generator.setApiPrefix('/endpoint2');
 generator.generate(files, optionalCallback);
 ```
 
@@ -31,8 +31,11 @@ generator.generate(files, optionalCallback);
 
 [See all Annotations](annotations.md)
 
-#### Example
-Take a look into [`/test/test.js`](/test/test.js).  
+#### Example & Tests
+##### Tests
+To run the tests, execute `npm test`.
+
+Take a look into [`/sample/test.js`](/sample/test.js).  
 Change the first parameter, passed to index.js to null, if you want to use our built in web server.
 Our built in web server listen on port 3000, if you use express, you can use port 3400.  
 [Example](/test/sample.js)

@@ -16,9 +16,7 @@ function AnnotationTranslator() {
     this.translate = function(annotations) {
         var data = new ApiRoute();
 
-        for (var r = 0; r < annotations.length; r++) {
-            var comment = annotations[r];
-
+        annotations.forEach(function (comment) {
             switch (comment.key) {
                 case ROUTE_ANNOTATION:
                     data.route = comment.value;
@@ -39,7 +37,7 @@ function AnnotationTranslator() {
                     data.security = comment.value;
                     break;
             }
-        }
+        });
 
         return data;
     }

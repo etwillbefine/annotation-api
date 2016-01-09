@@ -4,7 +4,12 @@ var annotation = require('annotation');
 var Controller = require('./controller');
 var AnnotationTranslator = require('./translator');
 
-function APIGenerator(app) {
+/**
+ * @param {*|null} app
+ * @param {string|null} prefix
+ * @constructor
+ */
+function APIGenerator(app, prefix) {
 
     if (!app) {
         var HTTPServer = require('./http');
@@ -13,14 +18,14 @@ function APIGenerator(app) {
 
     var count = 0;
     var translator = new AnnotationTranslator();
-    var appPrefix = '/api';
+    var appPrefix = prefix || '/api';
 
     /**
      * @param {Array} routes
      * @param {Function} callback
      */
     this.generate = function(routes, callback) {
-        resolveAPIFile(0, routes, callback);
+        this.resolveAPIFile(0, routes, callback);
     };
 
     /**
@@ -93,6 +98,14 @@ function APIGenerator(app) {
         return this;
     };
 
+    /**
+     * @returns {number}
+     */
+    this.getCount = function() {
+        return count;
+    };
+
+    this.resolveAPIFile = resolveAPIFile;
 }
 
 /**
