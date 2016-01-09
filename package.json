@@ -1,6 +1,6 @@
 {
   "name": "annotation-api",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Provides routing definition with annotations (for express or our built in server)",
   "keywords": [
     "annotation",
@@ -9,20 +9,24 @@
     "routes",
     "express"
   ],
+  "tonicExampleFilename": "tonic.js",
   "author": "Tim Gatzemeier <it@public-enterprise.de>",
   "dependencies": {
     "annotation": "~0.1"
   },
   "devDependencies": {
     "express": "~4.0",
-    "body-parser": "~1.14"
+    "body-parser": "~1.14",
+    "jasmine-core": "~2.4",
+    "jasmine": "~2.4"
   },
   "directories": {
     "doc": "doc",
     "test": "test"
   },
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node_modules/jasmine/bin/jasmine.js",
+    "start": "node sample/test.js"
   },
   "repository": {
     "type": "git",

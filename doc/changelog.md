@@ -1,5 +1,15 @@
 # Changelog
 
+#### V.0.1.4
+New:
+Tonic example file (npm)
+Jasmine for unit testing
+Api-Prefix as 3rd parameter
+
+Fixes:
+Fix RegExp validation
+Object and Array type validation
+
 #### V.0.1.3
 New:  
 Responsibility to get errors if something went wrong. This allows you to return a customized error response.  
