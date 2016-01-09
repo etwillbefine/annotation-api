@@ -13,7 +13,7 @@ server.listen(3400);
 // pass null instead of app, if you want to use the built in web server
 require('./../index.js')(
     app, [ __dirname + '/sample.js' ],
-    function() {
-        console.log("API compiled");
+    function(c) {
+        console.log("Test-API compiled "  + c);
     }
 );

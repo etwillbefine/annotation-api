@@ -27,7 +27,8 @@ module.exports.testApi = function(req, res, next) {
  * @HTTP("GET");
  * @Route("/test");
  * @Query({
- *  "test": { "required": true, "type": "number" }
+ *  "test": { "required": true, "type": "number" },
+ *  "number": { "required": true, "rules": { "equals": "100" }}
  * });
  *
  * @param req
@@ -51,7 +52,6 @@ module.exports.testGet = function(req, res) {
  * @param errors
  */
 module.exports.testErrorHandler = function(req, res, errors) {
-    console.log(errors);
     if (errors instanceof Array && errors.length > 0) {
         res.send('Something went wrong. We need the parameter ;=)');
         return;
