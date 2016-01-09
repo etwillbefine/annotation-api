@@ -7,12 +7,12 @@ function Validator() {
      * @returns {boolean}
      */
     this.minLength = function(constraint) {
-        if (!constraint.getValue()) {
+        var str = constraint.getContent()[0];
+        if (!str) {
             return false;
         }
 
-        var count = this.getContent()[0];
-        return count <= constraint.getValue().length;
+        return str.length >= constraint.getValue();
     };
 
     /**
@@ -20,12 +20,12 @@ function Validator() {
      * @returns {boolean}
      */
     this.maxLength = function(constraint) {
-        if (!constraint.getValue()) {
+        var str = constraint.getContent()[0];
+        if (!str) {
             return false;
         }
 
-        var count = this.getContent()[0];
-        return count > constraint.getValue().length;
+        return str.length <= constraint.getValue();
     };
 
     /**
@@ -33,8 +33,7 @@ function Validator() {
      * @returns {boolean}
      */
     this.regexp = function(constraint) {
-        var valid = '/' + constraint.getValue() + '/';
-        var rgx = new RegExp(valid, 'i');
+        var rgx = new RegExp(constraint.getValue(), 'i');
 
         return rgx.test(constraint.getContent()[0]);
     };
