@@ -7,3 +7,6 @@ node_js:
   - "0.10"
 before_script:
   - npm install --save-dev
+cache:
+  directories:
+    - node_modules
