@@ -63,6 +63,9 @@ By default this module provides two authentication methods by default:
 ```
 Rules can be defined like rules on query or body payload.
 
+As an alternative to a sessionStorage or the custom methods, you can use `express-session`.
+We'll test whether the session exists on `request.session`.
+
 [complete example](/sample/sample.js#L65)
 
 ---
