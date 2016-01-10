@@ -1,4 +1,5 @@
 # Documentation
+[![Build Status](https://travis-ci.org/etwillbefine/annotation-api.svg)](https://travis-ci.org/etwillbefine/annotation-api)
 
 ### Node.js routing using annotations
 
@@ -9,8 +10,8 @@ You can use it with express framework. Otherwise you can use the custom (flat an
 Read the [Changelog](/doc/changelog.md).
 
 ## Annotations
-[See all annotations](/doc/annotations.md)  
-[Define constraints on payload](/doc/constraints.md)
+- [See all annotations](/doc/annotations.md)
+- [Define constraints on payload](/doc/constraints.md)
 
 ## Create a Route
 [Read more](/doc/usage.md)
@@ -23,4 +24,5 @@ You have to run `npm install`, before you are able to use this module.
 Can be found [here](/test/sample.js)
 
 #### Tests
+Before running the tests, execute `npm install --save-dev`  
 Execute the tests, using `npm test`.
