@@ -95,14 +95,14 @@ function APIPayloadParser() {
             case ARRAY_TYPE:
                 return Object.prototype.toString.call(given) === '[object Array]';
             case OBJECT_TYPE:
-                return typeof given == 'object';
+                return typeof given == 'object' && Object.prototype.toString.call(given) != '[object Array]';
             default:
                 return true;
         }
     };
 
     /**
-     * @param {{}} rules
+     * @param {{}|*} rules
      * @param {*} given
      * @return {Boolean}
      */

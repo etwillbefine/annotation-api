@@ -24,8 +24,32 @@ Take a look to our [example](/test/sample.js)
 If you add this annotation to your route definition, you will get a list of errors as the third parameter from your callback. 
 In this case our controller will not reject the request. Feel free to send a customized response.
 
-`@Security("");`:  
-Coming soon
+`@Security("authenticated_method");`:  
+You can use the security annotation, to check if the user has a valid session. To check whether a session is valid or not,
+you can push a `SessionStorageInterface` to the generator. Otherwise you can define an own authenticated method. 
 
+Example:
+```js
+/**
+ * ....
+ * @Security("my_method");
+ * @CustomErrorHandler(); (you can is it without custom error)
+ */
+module.exports.auth = function(req, res, next, err) {};
+ 
+generator.addSecurityMethod('my_method', function (request, callback) {
+    // ...
+    callback(error, session);
+});
+
+generator.setSessionStorage(storageInterface);
+```
+
+A `storageInterface` must provide a `.get` method. If this method contains 2 arguments, we'll use it to fetch the session.
+Otherwise if there is only one argument available, we'll try to execute the query as a promise or with `.exec`.
+
+[complete example](/sample/sample.js#65)
+
+---
 __Note:__ `;` is required after each annotation.  
 You can also define your custom annotations or doc blocks.
