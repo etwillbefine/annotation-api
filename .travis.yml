@@ -14,5 +14,7 @@ cache:
 before_script:
   - npm install --save-dev
 after_script:
+  - npm install -g istanbul
   - npm install -g codeclimate-test-reporter
-  - codeclimate-test-reporter < lcov.info
+  - istanbul cover node_modules/jasmine/bin/jasmine.js
+  - codeclimate-test-reporter < coverage/lcov.info
