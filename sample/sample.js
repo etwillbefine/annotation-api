@@ -75,11 +75,6 @@ module.exports.testErrorHandler = function(req, res, errors) {
  * @param err
  */
 module.exports.testValidAuth = function(req, res, next, err) {
-    if (err) {
-        res.end('Not authenticated. Something went wrong.');
-        return;
-    }
-
     var session = req.api.session;
     res.end('Hey ' + session.name);
 };
