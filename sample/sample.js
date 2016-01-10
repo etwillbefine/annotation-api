@@ -1,6 +1,7 @@
 "use strict";
 
 /**
+ * POST http://localhost:[3400|3000]/api/test?page=1
  * @Method("testApi");
  * @HTTP("POST");
  * @Route("/test");
@@ -23,6 +24,7 @@ module.exports.testApi = function(req, res, next) {
 };
 
 /**
+ * GET http://localhost:[3400|3000]/api/test?test=2&number=100
  * @Method("testGet");
  * @HTTP("GET");
  * @Route("/test");
@@ -39,6 +41,7 @@ module.exports.testGet = function(req, res) {
 };
 
 /**
+ * GET http://localhost:[3400|3000]/api/err
  * @Method("testErrorHandler");
  * @CustomErrorHandler();
  * @HTTP("GET");
@@ -59,3 +62,58 @@ module.exports.testErrorHandler = function(req, res, errors) {
 
     res.send('no errors happen, everything ok');
 };
+
+/**
+ * GET http://localhost:[3400|3000]/api/valid-auth
+ * @Method("testValidAuth");
+ * @Route("/valid-auth");
+ * @Security("is_authenticated");
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @param err
+ */
+module.exports.testValidAuth = function(req, res, next, err) {
+    if (err) {
+        res.end('Not authenticated. Something went wrong.');
+        return;
+    }
+
+    var session = req.api.session;
+    res.end('Hey ' + session.name);
+};
+
+/**
+ * GET http://localhost:[3400|3000]/api/invalid-auth
+ * @Method("testInvalidAuth");
+ * @Route("/invalid-auth");
+ * @CustomErrorHandler();
+ * @Security("is_fully_authenticated");
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @param err
+ */
+module.exports.testInvalidAuth = function(req, res, next, err) {
+    if (err) {
+        res.end('Not fully authenticated. Its correct :)');
+        return;
+    }
+
+    res.end('Fully authenticated. Something went wrong.');
+};
+
+/**
+ * GET http://localhost:[3400|3000]/api/invalid-session
+ * @Method("testNonExistingSession");
+ * @Route("/invalid-session");
+ * @Security({ "method": "session_exists", "session": "my_session", "authenticator": "is_fully_authenticated" });
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @param err
+ */
+module.exports.testNonExistingSession = function(req, res, next, err) {};
