@@ -1,5 +1,5 @@
 # Documentation
-[![Build Status](https://travis-ci.org/etwillbefine/annotation-api.svg?branch=master)](https://travis-ci.org/etwillbefine/annotation-api)
+[![Build Status](https://travis-ci.org/etwillbefine/annotation-api.svg?branch=master)](https://travis-ci.org/etwillbefine/annotation-api?branch=master)
 
 ### Node.js routing using annotations
 
