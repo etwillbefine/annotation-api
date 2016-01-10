@@ -42,13 +42,28 @@ generator.addSecurityMethod('my_method', function (request, callback) {
     callback(error, session);
 });
 
+// or:
 generator.setSessionStorage(storageInterface);
 ```
 
 A `storageInterface` must provide a `.get` method. If this method contains 2 arguments, we'll use it to fetch the session.
 Otherwise if there is only one argument available, we'll try to execute the query as a promise or with `.exec`.
 
-[complete example](/sample/sample.js#65)
+By default this module provides two authentication methods by default:
+- `session_exists` requires: { method: "session_exists", "session": "session-name" }
+- `session_contains` requires (rules and type are optional): 
+```json
+{ 
+    "method": "session_contains", 
+    "session": "session-name", 
+    "properties": { 
+        "id": { "type": "string", "rules": { "regexp": "regexp" }} 
+    } 
+}
+```
+Rules can be defined like rules on query or body payload.
+
+[complete example](/sample/sample.js#L65)
 
 ---
 __Note:__ `;` is required after each annotation.  
