@@ -1,0 +1,9 @@
+engines:
+  duplication:
+    enabled: true
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+exclude_paths:
+  - spec/**/*
