@@ -3,20 +3,23 @@
 var annotation = require('annotation');
 var Controller = require('./controller');
 var AnnotationTranslator = require('./translator');
+var SecurityContext = require('./security');
 
 /**
  * @param {*|null} app
  * @param {string|null} prefix
+ * @param {boolean} isEnabled only for test usage
  * @constructor
  */
-function APIGenerator(app, prefix) {
+function APIGenerator(app, prefix, isEnabled) {
 
-    if (!app) {
+    if (!app && isEnabled !== false) {
         var HTTPServer = require('./http');
         app = new HTTPServer().getApp();
     }
 
     var count = 0;
+    var security = new SecurityContext({}, null);
     var translator = new AnnotationTranslator();
     var appPrefix = prefix || '/api';
 
@@ -37,8 +40,40 @@ function APIGenerator(app, prefix) {
 
         // bind route on app
         app[method](uri, function (req, res, next) {
+            /** @type {{}} */
+            req.api = {};
+
             var controller = new Controller(req, res, next);
-            controller.handle(method, routeInfo);
+            if (!routeInfo.security) {
+                controller.handle(method, routeInfo);
+                return;
+            }
+
+            security.applySecurity(routeInfo, req, function(err, session, redirect) {
+                if (!err && session) {
+                    /** @type {{}|*|null} */
+                    req.api.session = session;
+                    controller.handle(method, routeInfo);
+                    return;
+                }
+
+                /** @type {{error: *, session: *}} */
+                req.api.auth = { error: err, session: session };
+                if (routeInfo.useCustomErrorHandler) {
+                    routeInfo.callable(req, res, next, err);
+                    return;
+                }
+                if (redirect) {
+                    res.redirect(redirect.split('?').shift() + '?err=' + (err.code || encodeURIComponent(err.message)));
+                    return;
+                }
+                if (typeof next == 'function') {
+                    next(JSON.stringify(err));
+                    return;
+                }
+
+                res.json(JSON.stringify(err));
+            });
         });
     };
 
@@ -105,6 +140,32 @@ function APIGenerator(app, prefix) {
         return count;
     };
 
+    /**
+     * @returns {SecurityContext}
+     */
+    this.getSecurityContext = function() {
+        return security;
+    };
+
+    /**
+     * @param storageInterface
+     */
+    this.setSessionStorage = function(storageInterface) {
+        security.getSessionStorage().setStorage(storageInterface);
+    };
+
+    /**
+     * @param {string} name
+     * @param {Function} callable
+     * @returns {boolean}
+     */
+    this.addSecurityMethod = function(name, callable) {
+        return security.addCallable(name, callable);
+    };
+
+    /**
+     * @type {resolveAPIFile}
+     */
     this.resolveAPIFile = resolveAPIFile;
 }
 

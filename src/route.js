@@ -14,7 +14,7 @@ function ApiRoute() {
     /** @type {string} */
     this.method = 'get';
 
-    /** @type {null} */
+    /** @type {null|Function} */
     this.security = null;
 
     /** @type {null|Function} */

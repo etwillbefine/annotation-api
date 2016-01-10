@@ -11,13 +11,13 @@ function testDefaultPrefix() {
     var generator = new ApiGenerator();
     expect(generator.getApiPrefix()).toEqual('/api');
 
-    generator = new ApiGenerator(null, '/custom');
+    generator = new ApiGenerator(null, '/custom', false);
     expect(generator.getApiPrefix()).toEqual('/custom');
 }
 
 function testResolveMethodCall() {
     var routingFiles = [ __dirname + '/../sample/sample.js' ];
-    var generator = new ApiGenerator();
+    var generator = new ApiGenerator(null, null, false);
     spyOn(generator, 'resolveAPIFile');
 
     generator.generate(routingFiles, function() {});
