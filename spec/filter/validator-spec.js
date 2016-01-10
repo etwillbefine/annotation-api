@@ -2,11 +2,13 @@
 
 var Validator = require('../../src/filter/validator.js');
 var Constraint = require('../../src/filter/constraint.js');
+var getFilter = require('../../src/filter/index.js')();
 
 describe('validator', function () {
     it('should validate equals constraint', testEqualValidation);
     it('should validate regexp constraint', testRegExpValidation);
     it('should validate length constraint', testLengthValidation);
+    it('should map the validation method to constraint', testConstraintsValidate);
 });
 
 function testEqualValidation() {
@@ -50,4 +52,21 @@ function testLengthValidation() {
     expect(validator.maxLength(constraint)).toBeFalsy();
     expect(validator.minLength(constraint)).toBeTruthy();
     expect(validator.minLength(constraint)).toBeFalsy();
+}
+
+function testConstraintsValidate() {
+    var data = [[ 'abc' ], [ 'fail' ]];
+    /** @type {Constraint} */
+    var equalsFilter = getFilter('equals');
+
+    expect(equalsFilter).toEqual(jasmine.any(Constraint));
+    expect(equalsFilter.validate).toEqual(jasmine.any(Function));
+
+    spyOn(equalsFilter, 'getValue').and.returnValue('abc');
+    spyOn(equalsFilter, 'getContent').and.callFake(function () {
+        return data.shift();
+    });
+
+    expect(equalsFilter.validate(equalsFilter)).toBeTruthy();
+    expect(equalsFilter.validate(equalsFilter)).toBeFalsy();
 }

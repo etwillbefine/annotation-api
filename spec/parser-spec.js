@@ -11,8 +11,9 @@ describe('request parser', function () {
 
 function testPayloadParser() {
     var parser = new Parser();
-    var result = parser.parsePayload({ required: true });
+
     spyOn(parser, 'parseProperty');
+    var result = parser.parsePayload({ required: true });
 
     expect(result.success).toBeFalsy();
     expect(result.errors.length).toEqual(1);
@@ -30,6 +31,11 @@ function testTypeValidation() {
     expect(parser.validateType('object', {})).toBeTruthy();
     expect(parser.validateType('number', 1)).toBeTruthy();
     expect(parser.validateType('string', 'abc')).toBeTruthy();
+
+    expect(parser.validateType('object', [])).toBeFalsy();
+    expect(parser.validateType('array', {})).toBeFalsy();
+    expect(parser.validateType('string', [])).toBeFalsy();
+    expect(parser.validateType('number', 'a1')).toBeFalsy();
 }
 
 function testRuleValidation() {
