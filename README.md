@@ -21,7 +21,7 @@ By default we use a prefix foreach route. You can change the prefix, using `gene
 You have to run `npm install`, before you are able to use this module.
 
 #### Example
-Can be found [here](/test/sample.js)
+Can be found [here](/sample/sample.js)
 
 #### Tests
 Before running the tests, execute `npm install --save-dev`  

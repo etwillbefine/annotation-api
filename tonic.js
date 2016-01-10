@@ -10,7 +10,7 @@ var called = 0;
 var generator = require('./index.js')(app);
 
 // add a custom is_authenticated method, otherwise you can add a storage interface
-generator.addSecurityMethod('is_authenticated', function (callback) {
+generator.addSecurityMethod('is_authenticated', function (request, callback) {
     callback(null, { name: 'session owner' });
 });
 

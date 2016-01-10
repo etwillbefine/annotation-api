@@ -5,8 +5,8 @@ language: node_js
 node_js:
   - "5.0"
   - "0.10"
-before_script:
-  - npm install --save-dev
 cache:
   directories:
     - node_modules
+before_script:
+  - npm install --save-dev
