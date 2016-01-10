@@ -8,5 +8,8 @@ engines:
     enabled: true
   fixme:
     enabled: true
+ratings:
+  paths:
+    - "src/**/*"
 exclude_paths:
   - spec/**/*
