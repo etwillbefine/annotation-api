@@ -5,9 +5,6 @@ language: node_js
 node_js:
   - "5.0"
   - "0.10"
-addons:
-  code_climate:
-    repo_token: 9a004b96f78eb162b04259a63e5a84b7c829e857
 cache:
   directories:
     - node_modules

@@ -17,7 +17,7 @@ function testDefaultPrefix() {
 
 function testResolveMethodCall() {
     var routingFiles = [ __dirname + '/../sample/sample.js' ];
-    var generator = new ApiGenerator(null, null, false);
+    var generator = new ApiGenerator({}, null, false);
     spyOn(generator, 'resolveAPIFile');
 
     generator.generate(routingFiles, function() {});

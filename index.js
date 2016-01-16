@@ -1,5 +1,7 @@
 "use strict";
 
+var APIGenerator = require('./src/generator');
+
 /**
  * @param app express-framework or null
  * @param {Array|null} routes file-paths to routing-files
@@ -16,7 +18,6 @@ module.exports = function(app, routes, prefix, callback) {
         callback = prefix;
     }
 
-    var APIGenerator = require('./src/generator');
     var generator = new APIGenerator(app, (isPrefixCallback) ? null : prefix);
 
     if (routes instanceof Array && routes.length > 0) {

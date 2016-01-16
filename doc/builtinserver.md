@@ -8,7 +8,7 @@ Also this server just provides fixed routes.
 
 ### Benchmark
 Benchmark-Screen (the upper one uses express):  
-[here](/test/benchmark.png)  
+[here](/sample/benchmark.png)  
 
 __Note:__ Normally there is a average load between 35 and 50 milliseconds for our test route. 
 It might could be a little bit faster, if you test it on your server.

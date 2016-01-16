@@ -4,6 +4,7 @@ var annotation = require('annotation');
 var Controller = require('./controller');
 var AnnotationTranslator = require('./translator');
 var SecurityContext = require('./security');
+var HTTPServer = require('./http');
 
 /**
  * @param {*|null} app
@@ -13,9 +14,8 @@ var SecurityContext = require('./security');
  */
 function APIGenerator(app, prefix, isEnabled) {
 
-    if (!app && isEnabled !== false) {
-        var HTTPServer = require('./http');
-        app = new HTTPServer().getApp();
+    if (!app) {
+        app = new HTTPServer(null, isEnabled).getApp();
     }
 
     var count = 0;
@@ -83,7 +83,7 @@ function APIGenerator(app, prefix, isEnabled) {
      * @param {Function} callback
      */
     var resolveAPIFile = function (index, routes, callback) {
-        if (index == routes.length) {
+        if (index === routes.length) {
             callback(count);
             return;
         }

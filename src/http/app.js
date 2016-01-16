@@ -2,9 +2,14 @@
 
 var HTTPServer = require('./server');
 
-function HTTPApp(port) {
+/**
+ * @param {number} port
+ * @param {boolean} enabled
+ * @constructor
+ */
+function HTTPApp(port, enabled) {
 
-    var server = new HTTPServer(port);
+    var server = new HTTPServer(port, enabled);
 
     this.get = resolve.bind({ method: 'get', server: server });
     this.post = resolve.bind({ method: 'post', server: server  });

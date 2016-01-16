@@ -2,16 +2,19 @@
 
 var ResponsePrototype = require('./response');
 var RequestMapper = require('./mapper');
+var http = require('http');
 
 /**
  * @param {number|null} port default 3000
+ * @param {boolean} enabled default true
  * @constructor
  */
-function HTTPServer(port) {
+function HTTPServer(port, enabled) {
 
-    var http = require('http');
-    var server = http.createServer(requestHandler);
-    server.listen(port);
+    if (enabled !== false) {
+        var server = http.createServer(this.requestHandler);
+        server.listen(port || 3000);
+    }
 
     /** @type {Array} **/
     var stack = [];
@@ -20,19 +23,15 @@ function HTTPServer(port) {
      * @param req
      * @param res
      */
-    function requestHandler(req, res) {
+    this.requestHandler = function(req, res) {
         var url = req.url.split('?')[0];
         var method = req.method.toLowerCase();
         
         ResponsePrototype.prototype = res;
         res = new ResponsePrototype(res);
 
-        for(var item in stack) {
-            if (!stack.hasOwnProperty(item)) {
-                continue;
-            }
-
-            if (handleRoute(stack[item], req, res, url, method)) {
+        for(var r = 0; r < stack.length; r++) {
+            if (this.handleRoute(stack[r], req, res, url, method)) {
                 return;
             }
         }
@@ -41,7 +40,7 @@ function HTTPServer(port) {
             errors: [ { error: 'route_not_found', code: 404 } ],
             request: { route: url, method: method }
         });
-    }
+    };
 
     /**
      * @param route
@@ -51,7 +50,7 @@ function HTTPServer(port) {
      * @param method
      * @return {boolean}
      */
-    function handleRoute(route, req, res, url, method) {        
+    this.handleRoute = function(route, req, res, url, method) {
         if (route.route != url || route.method != method) {
             return false;
         }
@@ -65,7 +64,7 @@ function HTTPServer(port) {
 
         mapper.map();
         return true;
-    }
+    };
 
     /**
      * @param method
@@ -73,7 +72,7 @@ function HTTPServer(port) {
      * @param callback
      */
     this.putToStack = function(method, route, callback) {
-        stack.push({
+        this.getStack().push({
             method: method.toLowerCase(),
             route: route,
             callable: callback
@@ -89,6 +88,13 @@ function HTTPServer(port) {
 
     this.getServer = function() {
         return server;
+    };
+
+    /**
+     * @returns {Array}
+     */
+    this.getStack = function() {
+        return stack;
     };
 
 }

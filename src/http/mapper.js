@@ -15,26 +15,34 @@ function RequestMapper(req, method) {
     this.map = function() {
         this.mapQuery();
 
-        if (method == 'post') {
-            this.readBody();
-
-            req.on('end', function() {
-                this.mapBody();
-                mapped();
-            }.bind(this));
+        if (method != 'post') {
+            this.mapped();
             return;
         }
 
-        mapped();
+        this.readBody();
+
+        req.on('end', function(chunk) {
+            if (chunk) {
+                bodyChunks += chunk;
+            }
+
+            this.mapBody();
+            this.mapped();
+        }.bind(this));
     };
 
-    function mapped() {
+    this.mapped = function() {
         if (typeof onFinished == 'function') {
             onFinished();
         }
-    }
+    };
 
     this.mapQuery = function() {
+        if (!req || !req.url) {
+            return;
+        }
+
         var parts = req.url.split('?');
         if (!parts || !parts.length) {
             return;
@@ -90,10 +98,10 @@ function RequestMapper(req, method) {
         }
 
         var obj = {};
-        for(var p in params) {
-            var keyValue = params[p].split('=');
+        params.forEach(function (param) {
+            var keyValue = param.split('=');
             obj[keyValue[0]] = decodeURIComponent(keyValue[1]);
-        }
+        });
 
         return obj;
     }
