@@ -1,6 +1,7 @@
 # Documentation
 [![Build Status](https://travis-ci.org/etwillbefine/annotation-api.svg?branch=master)](https://travis-ci.org/etwillbefine/annotation-api)
 [![Code Climate](https://codeclimate.com/github/etwillbefine/annotation-api/badges/gpa.svg?branch=master)](https://codeclimate.com/github/etwillbefine/annotation-api)
+[![Test Coverage](https://codeclimate.com/github/etwillbefine/annotation-api/badges/coverage.svg)](https://codeclimate.com/github/etwillbefine/annotation-api/coverage)
 
 ### Node.js routing using annotations
 
