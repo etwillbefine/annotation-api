@@ -1,5 +1,11 @@
 # Changelog
 
+#### V.0.2.1
+New:
+- `in` and `notIn` constraints
+- coverage and code climate badges
+- controller & built in server specs
+
 #### V.0.2.0
 New:
 - Security annotation + tests
