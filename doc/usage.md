@@ -13,6 +13,8 @@ generator.setApiPrefix('/api/customer');
 generator.generate(customerApi, optionalCallback);
 ```
 
+__Please note:__ When you are using the express-framework you must also install and activate express `body-parser`.
+
 If you want to use our custom built in web server, you can use this:  
 ```js
 var files = [ __dirname + '/path/too/your/file' ];
