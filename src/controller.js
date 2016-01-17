@@ -52,6 +52,13 @@ function Controller(req, res, next) {
         }
     };
 
+    /**
+     * @returns {APIPayloadParser}
+     */
+    this.getParser = function() {
+        return parser;
+    };
+
 }
 
 /**

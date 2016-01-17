@@ -41,6 +41,21 @@ module.exports.testGet = function(req, res) {
 };
 
 /**
+ * GET http://localhost:[3400|3000]/api/not-in?param=blacklisted
+ * @Method("testNotInFilter");
+ * @Route("/not-in");
+ * @Query({
+ *  "param": { "rules": { "notIn": [ "blacklisted" ] }}
+ * });
+ *
+ * @param req
+ * @param res
+ */
+module.exports.testNotInFilter = function(req, res) {
+    res.end('?param does not contains blacklisted words');
+};
+
+/**
  * GET http://localhost:[3400|3000]/api/err
  * @Method("testErrorHandler");
  * @CustomErrorHandler();

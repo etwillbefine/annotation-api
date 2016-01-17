@@ -9,6 +9,7 @@ describe('validator', function () {
     it('should validate regexp constraint', testRegExpValidation);
     it('should validate length constraint', testLengthValidation);
     it('should map the validation method to constraint', testConstraintsValidate);
+    it('should validate in and notIn constraint', testConstraintsInOrNotIn);
 });
 
 function testEqualValidation() {
@@ -69,4 +70,32 @@ function testConstraintsValidate() {
 
     expect(equalsFilter.validate(equalsFilter)).toBeTruthy();
     expect(equalsFilter.validate(equalsFilter)).toBeFalsy();
+}
+
+function testConstraintsInOrNotIn() {
+    var data = [[ 'should be found' ], [ 'fail' ], [ 'success' ], [ 'should not be in' ]];
+    /** @type {Constraint} */
+    var inFilter = getFilter('in');
+    /** @type {Constraint} */
+    var notInFilter = getFilter('notIn');
+
+    expect(inFilter).toEqual(jasmine.any(Constraint));
+    expect(inFilter.validate).toEqual(jasmine.any(Function));
+    expect(notInFilter).toEqual(jasmine.any(Constraint));
+    expect(notInFilter.validate).toEqual(jasmine.any(Function));
+
+    spyOn(inFilter, 'getValue').and.returnValue([ 'should be found', 'anyway' ]);
+    spyOn(inFilter, 'getContent').and.callFake(function () {
+        return data.shift();
+    });
+    spyOn(notInFilter, 'getValue').and.returnValue([ 'anyway', 'should not be in' ]);
+    spyOn(notInFilter, 'getContent').and.callFake(function () {
+        return data.shift();
+    });
+
+    expect(inFilter.validate(inFilter)).toBeTruthy();
+    expect(inFilter.validate(inFilter)).toBeFalsy();
+
+    expect(notInFilter.validate(notInFilter)).toBeTruthy();
+    expect(notInFilter.validate(notInFilter)).toBeFalsy();
 }

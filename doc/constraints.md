@@ -7,3 +7,5 @@ Define your filter in `@Body` or `@Query` annotation using keyword `rules`:
 - `maxLength: number`  
 - `equals: string`  
 - `regexp: string`  
+- `in: Array<string>`  
+- `notIn: Array<string>`  
