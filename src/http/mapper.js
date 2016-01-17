@@ -15,7 +15,7 @@ function RequestMapper(req, method) {
     this.map = function() {
         this.mapQuery();
 
-        if (method != 'post') {
+        if (method !== 'post') {
             this.mapped();
             return;
         }

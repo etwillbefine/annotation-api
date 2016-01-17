@@ -17,7 +17,7 @@ function AuthCheck(storage, request, callables, callback) {
      * @param {*|{method: string, session: string, properties: {}|null|string, authenticator: string|null}} authMethod
      */
     this.isAuthenticated = function(authMethod) {
-        if (typeof authMethod == 'string') {
+        if (typeof authMethod === 'string') {
             if (!this.callBehaviour(authMethod, callback)) {
                 callback(new Error('Cannot check authentication. Auth method ' + authMethod + ' was not found.'));
             }

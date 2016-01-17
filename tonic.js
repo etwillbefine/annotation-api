@@ -7,7 +7,7 @@ var start = new Date().getTime();
 var called = 0;
 
 /** @type {APIGenerator} */
-var generator = require('./index.js')(app);
+var generator = require('annotation-api')(app);
 
 // add a custom is_authenticated method, otherwise you can add a storage interface
 generator.addSecurityMethod('is_authenticated', function (request, callback) {
