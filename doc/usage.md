@@ -1,28 +1,35 @@
 # Usage
-This module uses the [`annotation`](https://www.npmjs.com/package/annotation) module.  
 
-## Using this module
 ```js
 var express = require('express');
 var files = [ __dirname + '/path/to/your/file' ];
 var customerApi = [ __dirname + '/path/to/customer/api/file' ];
 
 var annotationApi = require('annotation-api');
-var generator = annotationApi(express(), files, optionalCallback);
-generator.setApiPrefix('/api/customer');
-generator.generate(customerApi, optionalCallback);
+var api = annotationApi(express(), files, optionalCallback);
+api.setApiPrefix('/api/customer');
+api.generate(customerApi, optionalCallback);
 ```
 
 __Please note:__ When you are using the express-framework you must also install and activate express `body-parser`.
 
+#### Relative paths or glob usage
+You can pass a plain string to `annotationApi()` or `.generate`. 
+In this case this module uses `glob` to fetch all files automatically.
+```js
+// ... express, body-parser, ...
+var annotationApi = require('annotation-api');
+var api = annotationApi(app, './routes/**/*.js', '/prefix', callback);
+```
+
 If you want to use our custom built in web server, you can use this:  
 ```js
-var files = [ __dirname + '/path/too/your/file' ];
+var files = [ './relative/path/to/your/file' ];
 var annotationApi = require('annotation-api');
 
-var generator = annotationApi(null, files, '/endpoint1');
-generator.setApiPrefix('/endpoint2');
-generator.generate(files, optionalCallback);
+var api = annotationApi(null, files, '/endpoint1');
+api.getGenerator().setApiPrefix('/endpoint2');
+api.generate(files, optionalCallback);
 ```
 
 ## Create a Route
@@ -33,12 +40,8 @@ generator.generate(files, optionalCallback);
 
 [See all Annotations](annotations.md)
 
-#### Example & Tests
-##### Tests
-To run the tests, execute `npm test`.
-
+#### Example
 Take a look into [`/sample/test.js`](/sample/test.js).  
 Change the first parameter, passed to index.js to null, if you want to use our built in web server.
 Our built in web server listen on port 3000, if you use express, you can use port 3400.  
-[Example](/test/sample.js)
-
+[Example](/sample/sample.js)

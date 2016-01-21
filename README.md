@@ -26,5 +26,4 @@ You have to run `npm install`, before you are able to use this module.
 Can be found [here](/sample/sample.js)
 
 #### Tests
-Before running the tests, execute `npm install --save-dev`  
 Execute the tests, using `npm test`.

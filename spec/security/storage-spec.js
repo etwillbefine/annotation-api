@@ -64,8 +64,10 @@ function testStorageCallWithPromise() {
 
     storage.getSession('get session from promise', callable);
 
-    expect(promiseInterface.then).toHaveBeenCalledWith(callable);
-    expect(promiseInterface.catch).toHaveBeenCalledWith(callable);
+    expect(promiseInterface.then).not.toHaveBeenCalledWith(callable);
+    expect(promiseInterface.catch).not.toHaveBeenCalledWith(callable);
+    expect(promiseInterface.then).toHaveBeenCalledWith(jasmine.any(Function));
+    expect(promiseInterface.catch).toHaveBeenCalledWith(jasmine.any(Function));
 }
 
 function ExecInterface() {

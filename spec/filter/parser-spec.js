@@ -1,6 +1,6 @@
 "use strict";
 
-var Parser = require('../src/parser');
+var Parser = require('../../src/filter/parser');
 
 describe('request parser', function () {
     it('should parse the request payload', testPayloadParser);

@@ -1,10 +1,10 @@
 "use strict";
 
-var Controller = require('../src/controller');
-var PayloadParser = require('../src/parser');
+var ControllerAction = require('../../src/dispatcher/controller-action');
+var PayloadParser = require('../../src/filter/parser');
 var responseMock = { json: function() {} };
 var requestMock = { query: { param: 'value' }, body: { param: 'value' }};
-var routeMock = { query: { param: 'expected' }, body: { param: 'expected' }, callable: function() {} };
+var routeMock = { query: { param: 'expected' }, body: { param: 'expected' }, callable: function() {}, method: 'get' };
 
 describe('controller', function() {
     it('should parse the request and respond', testRouteHandling);
@@ -13,11 +13,12 @@ describe('controller', function() {
 });
 
 function testRouteHandling() {
-    var controller = new Controller();
-    spyOn(controller, 'parseRequest');
+    var controller = new ControllerAction(requestMock);
+    spyOn(controller, 'parseRequest').and.callThrough();
     spyOn(controller, 'respond');
 
-    controller.handle();
+    routeMock.method = 'get';
+    controller.handle(routeMock);
 
     expect(controller.getParser()).toEqual(jasmine.any(PayloadParser));
     expect(controller.parseRequest).toHaveBeenCalled();
@@ -25,12 +26,13 @@ function testRouteHandling() {
 }
 
 function testParserCalls() {
-    var controller = new Controller(requestMock);
+    var controller = new ControllerAction(requestMock);
     spyOn(controller, 'respond');
     spyOn(controller.getParser(), 'parsePayload');
 
-    controller.handle('get', routeMock);
-    controller.handle('post', routeMock);
+    controller.handle(routeMock);
+    routeMock.method = 'post';
+    controller.handle(routeMock);
 
     expect(controller.respond)
         .toHaveBeenCalled();
@@ -46,20 +48,24 @@ function testParserCalls() {
 
 function testResponse() {
     var errorResponse = { getErrors: function() {} };
-    var responses = [{ success: true }, { success: false }, errorResponse ];
-    var controller = new Controller(requestMock, responseMock);
+    var responses = [{ success: true }, errorResponse, errorResponse ];
+    var controller = new ControllerAction(requestMock, responseMock);
     spyOn(routeMock, 'callable');
     spyOn(responseMock, 'json');
-    spyOn(errorResponse, 'getErrors');
-    spyOn(controller, 'parseRequest');
+    spyOn(errorResponse, 'getErrors').and.callThrough();
+    spyOn(controller, 'parseRequest').and.callThrough();
     spyOn(controller.getParser(), 'getResponse').and.callFake(function () {
         return responses.shift();
     });
 
-    controller.handle('get', routeMock);
-    controller.handle('post', routeMock);
+    routeMock.method = 'post';
+    controller.handle(routeMock);
+
+    routeMock.method = 'get';
+    controller.handle(routeMock);
+
     routeMock.useCustomErrorHandler = function() {};
-    controller.handle('get', routeMock);
+    controller.handle(routeMock);
 
     expect(controller.parseRequest).toHaveBeenCalledTimes(3);
     expect(controller.getParser().getResponse).toHaveBeenCalledTimes(3);

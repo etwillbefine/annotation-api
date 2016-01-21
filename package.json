@@ -1,6 +1,6 @@
 {
   "name": "annotation-api",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Provides routing definition with annotations (for express or our built in server)",
   "keywords": [
     "annotation",
@@ -12,6 +12,7 @@
   "tonicExampleFilename": "tonic.js",
   "author": "Tim Gatzemeier <it@public-enterprise.de>",
   "dependencies": {
+    "glob": "~6.0",
     "annotation": "~0.1"
   },
   "devDependencies": {

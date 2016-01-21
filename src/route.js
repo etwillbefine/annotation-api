@@ -23,6 +23,9 @@ function ApiRoute() {
     /** @type {boolean} */
     this.useCustomErrorHandler = false;
 
+    /** @type {null} */
+    this.redirectErrorHandler = '';
+
 }
 
 /**

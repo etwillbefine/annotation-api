@@ -1,7 +1,7 @@
 "use strict";
 
-var AnnotationTranslator = require('../src/translator');
-var ApiRoute = require('../src/route');
+var AnnotationTranslator = require('../../src/generator/translator');
+var ApiRoute = require('../../src/route');
 
 describe('annotation translator', function () {
     it('should map the annotation block to an ApiRoute', testApiRouteMapping);
@@ -14,7 +14,8 @@ function testApiRouteMapping() {
         { key: 'Method', value: 'GET' },
         { key: 'Query', value: {} },
         { key: 'Body', value: { field: 'value' } },
-        { key: 'CustomErrorHandler' }
+        { key: 'CustomErrorHandler' },
+        { key: 'Security', value: 'security_method' }
     ]);
 
     expect(route).toEqual(jasmine.any(ApiRoute));
@@ -22,5 +23,6 @@ function testApiRouteMapping() {
     expect(route.method).toEqual('get');
     expect(route.query).toEqual({});
     expect(route.body).toEqual({ field: 'value' });
+    expect(route.security).toEqual('security_method');
     expect(route.useCustomErrorHandler).toBeTruthy();
 }

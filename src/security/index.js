@@ -1,19 +1,12 @@
 "use strict";
 
-var SessionStroage = require('./storage');
+var SessionStorage = require('./storage');
 var AuthCheck = require('./auth-check');
 
-/**
- * @param {{}|null} callables
- * @param {{}|null} sessionInterface
- * @constructor
- */
-function SecurityContext(callables, sessionInterface) {
-    if (!callables) {
-        callables = {};
-    }
+function SecurityContext() {
 
-    var storage = new SessionStroage(sessionInterface);
+    var callables = {};
+    var storage = new SessionStorage();
 
     /**
      * @param {ApiRoute} route
@@ -55,6 +48,7 @@ function SecurityContext(callables, sessionInterface) {
     this.getSessionStorage = function() {
         return storage;
     };
+
 }
 
 /**
