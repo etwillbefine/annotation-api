@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var exp = require('express');
 var app = exp();
@@ -14,7 +14,7 @@ server.listen(3400);
 var generator = require('./../index.js')(
     app, [ __dirname + '/sample.js' ],
     function(c) {
-        console.log("Test-API compiled "  + c + " routes available.");
+        console.log('Test-API compiled '  + c + ' routes available.');
     }
 );
 

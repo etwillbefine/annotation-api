@@ -30,7 +30,7 @@ module.exports.testApi = function(req, res, next) {
  * @Route("/test");
  * @Query({
  *  "test": { "required": true, "type": "number" },
- *  "number": { "required": true, "rules": { "equals": "100" }}
+ *  "number": { "required": true, "rules": { "equals": 100 }}
  * });
  *
  * @param req
@@ -86,10 +86,8 @@ module.exports.testErrorHandler = function(req, res, errors) {
  *
  * @param req
  * @param res
- * @param next
- * @param err
  */
-module.exports.testValidAuth = function(req, res, next, err) {
+module.exports.testValidAuth = function(req, res) {
     var session = req.api.session;
     res.end('Hey ' + session.name);
 };
@@ -117,6 +115,8 @@ module.exports.testInvalidAuth = function(req, res, next, err) {
 
 /**
  * GET http://localhost:[3400|3000]/api/invalid-session
+ * authenticator is optional!
+ *
  * @Method("testNonExistingSession");
  * @Route("/invalid-session");
  * @Security({ "method": "session_exists", "session": "my_session", "authenticator": "is_fully_authenticated" });
@@ -124,6 +124,17 @@ module.exports.testInvalidAuth = function(req, res, next, err) {
  * @param req
  * @param res
  * @param next
- * @param err
  */
-module.exports.testNonExistingSession = function(req, res, next, err) {};
+module.exports.testNonExistingSession = function(req, res, next) {};
+
+/**
+ * @Method("testRedirect");
+ * @Route("/redirect");
+ * @Security("is_fully_authenticated");
+ * @RedirectErrorHandler("/redirect/%code%");
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+module.exports.testRedirect = function(req, res, next) {};
