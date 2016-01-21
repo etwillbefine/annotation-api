@@ -24,6 +24,22 @@ Take a look to our [example](/test/sample.js)
 If you add this annotation to your route definition, you will get a list of errors as the third parameter from your callback. 
 In this case our controller will not reject the request. Feel free to send a customized response.
 
+`@RedirectErrorHandler("/goto/%code%/%message%");`:
+If you want to redirect in the case of an error, you can add this annotation. 
+It is possible to redirect to route which contains the error code and message.
+This is very useful, when you want to throw a customized authentication error:
+```js
+generator.addSecurityMethod('my_authenticator', function(request, callback) {
+    callback({ code: 401, message: 'unauthorized' });
+});
+
+/**
+ * @RedirectErrorHandler("/login&err=%message%");
+ * @Security("my_authenticator");
+ */
+module.exports = function(req, res, next) {};
+```
+
 `@Security("authenticated_method");`:  
 You can use the security annotation, to check if the user has a valid session. To check whether a session is valid or not,
 you can push a `SessionStorageInterface` to the generator. Otherwise you can define an own authenticated method. 
@@ -33,7 +49,7 @@ Example:
 /**
  * ....
  * @Security("my_method");
- * @CustomErrorHandler(); (you can is it without custom error)
+ * @CustomErrorHandler(); (you can use it without custom error)
  */
 module.exports.auth = function(req, res, next, err) {};
  
@@ -63,8 +79,10 @@ By default this module provides two authentication methods by default:
 ```
 Rules can be defined like rules on query or body payload.
 
+You can add the `authenticator` property, when using these methods, to specify your custom authenticator.
+
 As an alternative to a sessionStorage or the custom methods, you can use `express-session`.
-We'll test whether the session exists on `request.session`.
+We'll test whether the session exists on `request.session` (first check).
 
 [complete example](/sample/sample.js#L65)
 

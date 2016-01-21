@@ -1,5 +1,15 @@
 # Changelog
 
+#### V.0.2.2
+New:
+- `RedirectErrorHandler` annotation
+- improved code coverage
+- relative paths allowed (`.generate([ './' ])`)
+- using glob when passing a plain string (`.generate('./')`)
+
+Fixes:
+- validate payload when using `Security` annotation and user haves a valid session
+
 #### V.0.2.1
 New:
 - `in` and `notIn` constraints
