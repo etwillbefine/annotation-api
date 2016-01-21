@@ -31,6 +31,9 @@ This is very useful, when you want to throw a customized authentication error:
 ```js
 generator.addSecurityMethod('my_authenticator', function(request, callback) {
     callback({ code: 401, message: 'unauthorized' });
+    
+    // otherwise (redirect-handler has a higher priority):
+    callback(null, null, '/goto');
 });
 
 /**
