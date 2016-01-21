@@ -3,7 +3,7 @@ const NUMBER_TYPE = 'number';
 const OBJECT_TYPE = 'object';
 const ARRAY_TYPE = 'array';
 
-var getFilter = require('./filter')();
+var getFilter = require('./index')();
 
 function APIPayloadParser() {
     "use strict";
@@ -89,13 +89,13 @@ function APIPayloadParser() {
     this.validateType = function(expected, given) {
         switch (expected) {
             case STRING_TYPE:
-                return typeof given == 'string';
+                return typeof given === 'string';
             case NUMBER_TYPE:
                 return !isNaN(parseFloat(given)) && isFinite(given);
             case ARRAY_TYPE:
                 return Object.prototype.toString.call(given) === '[object Array]';
             case OBJECT_TYPE:
-                return typeof given == 'object' && Object.prototype.toString.call(given) != '[object Array]';
+                return typeof given === 'object' && Object.prototype.toString.call(given) !== '[object Array]';
             default:
                 return true;
         }

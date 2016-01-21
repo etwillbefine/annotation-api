@@ -18,9 +18,9 @@ function SessionStorage(sessionInterface) {
         }
 
         var query = sessionInterface.get(sessionName);
-        if (query && typeof query.then == 'function' && typeof query.catch == 'function') {
-            query.then(callback);
-            query.catch(callback);
+        if (query && typeof query.then === 'function' && typeof query.catch === 'function') {
+            query.then(function (result) { callback(null, result) });
+            query.catch(function (err) { callback(err, null); });
             return;
         }
 
@@ -45,7 +45,7 @@ function SessionStorage(sessionInterface) {
      * @returns {boolean}
      */
     this.hasStorage = function() {
-        return sessionInterface && typeof sessionInterface.get == 'function';
+        return sessionInterface && typeof sessionInterface.get === 'function';
     };
 
 }

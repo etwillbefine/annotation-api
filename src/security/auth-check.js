@@ -1,7 +1,7 @@
 const SESSION_EXISTS_METHOD = 'session_exists';
 const SESSION_CONTAINS_METHOD = 'session_contains';
 
-var Parser = require('../parser');
+var Parser = require('../filter/parser');
 
 /**
  * @param {SessionStorage} storage
@@ -76,41 +76,46 @@ function AuthCheck(storage, request, callables, callback) {
                 return;
             }
 
-            var parser = new Parser();
-            var valid = true;
-            for(var prop in authMethod.properties) {
-                if (!authMethod.properties.hasOwnProperty(prop)) {
-                    continue;
-                }
-
-                if (!session.hasOwnProperty(prop)) {
-                    resolve({ message: 'Session does not contains ' + prop, code: 400 }, session);
-                    return;
-                }
-
-                var validation = authMethod.properties[prop];
-
-                if (validation.type) {
-                    if (!parser.validateType(validation.type, session[prop])) {
-                        valid = false;
-                        break
-                    }
-                }
-                if (validation.rules) {
-                    if (!parser.validateRules(validation.rules, session[prop])) {
-                        valid = false;
-                        break;
-                    }
-                }
-            }
-
-            if (!valid) {
+            if (!this.validateProperties(authMethod, session)) {
                 resolve({ message: 'Session does not match the required rules.', code: 400 }, session);
                 return;
             }
 
             resolve(null, session);
-        });
+        }.bind(this));
+    };
+
+    /**
+     * @param authMethod
+     * @param session
+     * @returns {boolean}
+     */
+    this.validateProperties = function(authMethod, session) {
+        var parser = new Parser();
+
+        for(var prop in authMethod.properties) {
+            if (!authMethod.properties.hasOwnProperty(prop)) {
+                continue;
+            }
+
+            if (!session.hasOwnProperty(prop)) {
+                return false;
+            }
+
+            var validation = authMethod.properties[prop];
+            if (validation.type) {
+                if (!parser.validateType(validation.type, session[prop])) {
+                    return false;
+                }
+            }
+            if (validation.rules) {
+                if (!parser.validateRules(validation.rules, session[prop])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     };
 
     /**

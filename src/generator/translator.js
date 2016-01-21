@@ -4,7 +4,8 @@ const BODY_ANNOTATION = 'Body';
 const METHOD_ANNOTATION = 'HTTP';
 const SECURITY_ANNOTATION = 'Security';
 const CUSTOM_ERROR_HANDLER = 'CustomErrorHandler';
-var ApiRoute = require('./route');
+const REDIRECT_ERROR_HANDLER = 'RedirectErrorHandler';
+var ApiRoute = require('./../route');
 
 function AnnotationTranslator() {
     "use strict";
@@ -32,6 +33,9 @@ function AnnotationTranslator() {
                     break;
                 case CUSTOM_ERROR_HANDLER:
                     data.useCustomErrorHandler = true;
+                    break;
+                case REDIRECT_ERROR_HANDLER:
+                    data.redirectErrorHandler = comment.value;
                     break;
                 case SECURITY_ANNOTATION:
                     data.security = comment.value;
