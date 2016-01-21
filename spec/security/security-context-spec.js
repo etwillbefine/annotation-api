@@ -19,7 +19,8 @@ function testSessionStorage() {
 
 function testCustomAuthenticator() {
     var customSecurity = function() {};
-    var context = new SecurityContext({ custom_authenticator: customSecurity }, null);
+    var context = new SecurityContext();
+    context.addCallable('custom_authenticator', customSecurity);
     context.addCallable('another_authenticator', customSecurity);
     context.addCallable('invalid_authenticator', 'no method');
 
