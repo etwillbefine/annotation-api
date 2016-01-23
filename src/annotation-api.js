@@ -43,7 +43,7 @@ function AnnotationApi(app, prefix, isEnabled) {
      * @returns {Array<string>}
      */
     this.generateFilePaths = function(filePath) {
-        if (path.resolve(filePath) !== path.normalize(filePath)) {
+        if (filePath === './' || path.resolve(filePath) !== path.normalize(filePath)) {
             // going into "your" project root (where node_modules are located)
             filePath = path.normalize(__dirname + '/../../../' + filePath);
         }

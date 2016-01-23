@@ -18,12 +18,29 @@ Read the [Changelog](/doc/changelog.md).
 ## Create a Route
 [Read more](/doc/usage.md)
 
+```js
+/**
+ * es6 example
+ * @Method("route");
+ * @Route("/route");
+ * @Query({ ... });
+ * @Security("is_authenticated");
+ * @RedirectErrorHandler("/err");
+ */
+module.exports.route = (req, res) => {
+    res.end('validated');
+};
+```
+
 ## Configuration
 By default we use a prefix foreach route. You can change the prefix, using `generator.setApiPrefix('')`.  
 You have to run `npm install`, before you are able to use this module.
 
 #### Example
 Can be found [here](/sample/sample.js)
+
+#### Doc-Builder
+[Read more](doc/doc-builder.md)
 
 #### Tests
 Execute the tests, using `npm test`.
