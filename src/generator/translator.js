@@ -5,6 +5,7 @@ const METHOD_ANNOTATION = 'HTTP';
 const SECURITY_ANNOTATION = 'Security';
 const CUSTOM_ERROR_HANDLER = 'CustomErrorHandler';
 const REDIRECT_ERROR_HANDLER = 'RedirectErrorHandler';
+const RESPONSE_ANNOTATION = 'Response';
 var ApiRoute = require('./../route');
 
 function AnnotationTranslator() {
@@ -29,7 +30,7 @@ function AnnotationTranslator() {
                     data.body = comment.value;
                     break;
                 case METHOD_ANNOTATION:
-                    data.method = comment.value;
+                    data.method = comment.value.toLowerCase();
                     break;
                 case CUSTOM_ERROR_HANDLER:
                     data.useCustomErrorHandler = true;
@@ -40,6 +41,8 @@ function AnnotationTranslator() {
                 case SECURITY_ANNOTATION:
                     data.security = comment.value;
                     break;
+                case RESPONSE_ANNOTATION:
+                    data.possibleResponses.push(comment.value);
             }
         });
 

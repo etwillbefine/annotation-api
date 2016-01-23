@@ -26,6 +26,9 @@ function ApiRoute() {
     /** @type {null} */
     this.redirectErrorHandler = '';
 
+    /** @type {Array} */
+    this.possibleResponses = [];
+
 }
 
 /**
