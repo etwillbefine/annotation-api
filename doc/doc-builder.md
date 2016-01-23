@@ -6,7 +6,7 @@
 
 ### Run from project root
 ```bash
-node node_modules/annotation-api/cli doc-builder <target-path> ./my-routes/actions/**/*.js [./more/**/*.js]
+node node_modules/annotation-api/cli doc-builder <target-path> ./my-routes/**/*.js [./more/**/*.js]
 ```
 
 `target-path` must be absolute. 

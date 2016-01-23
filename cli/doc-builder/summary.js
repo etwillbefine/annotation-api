@@ -29,7 +29,7 @@ function DocSummary(targetPath) {
             fs.writeFile(newPath, singleFile);
         });
 
-        summaryFile += '\n' + routeCount + ' route definitions available.\s\s\n';
+        summaryFile += '\n' + routeCount + ' route definitions available.  \n';
         summaryFile += '*Documentation generated with [`annotation-api`](https://www.npmjs.com/package/annotation-api).*';
         fs.writeFile(targetPath + '/overview.md', summaryFile);
     };
