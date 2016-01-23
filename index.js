@@ -11,14 +11,9 @@ var AnnotationApi = require('./src/annotation-api');
  */
 module.exports = function(app, routes, prefix, callback) {
     var isPrefixCallback = typeof prefix === 'function';
-    var isArray = routes instanceof Array;
     var api = new AnnotationApi(app, (!isPrefixCallback) ? prefix : null, true);
 
-    if (!isArray && routes) {
-        routes = [ routes ];
-    }
-
-    if (routes instanceof Array && routes.length) {
+    if (routes && routes.length) {
         api.generate(routes, (isPrefixCallback) ? prefix : callback);
     }
 
