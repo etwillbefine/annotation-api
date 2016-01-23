@@ -29,7 +29,7 @@ module.exports.testApi = function(req, res, next) {
  * @HTTP("GET");
  * @Route("/test");
  * @Query({
- *  "test": { "required": true, "type": "number" },
+ *  "test": { "required": true, "type": "number", "rules": { "min": 1, "max": 10 }},
  *  "number": { "required": true, "rules": { "equals": 100 }}
  * });
  *
