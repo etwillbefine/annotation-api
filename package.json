@@ -1,6 +1,6 @@
 {
   "name": "annotation-api",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Provides routing definition with annotations (for express or our built in server)",
   "keywords": [
     "annotation",

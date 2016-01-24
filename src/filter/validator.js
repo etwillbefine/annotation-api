@@ -62,6 +62,22 @@ function Validator() {
         return constraint.getValue().indexOf(constraint.getContent()[0]) == -1;
     };
 
+    /**
+     * @param {Constraint} constraint
+     * @returns {boolean}
+     */
+    this.min = function(constraint) {
+        return constraint.getContent()[0] >= constraint.getValue();
+    };
+
+    /**
+     * @param {Constraint} constraint
+     * @returns {boolean}
+     */
+    this.max = function(constraint) {
+        return constraint.getContent()[0] <= constraint.getValue();
+    };
+
 }
 
 /**

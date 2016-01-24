@@ -9,3 +9,5 @@ Define your filter in `@Body` or `@Query` annotation using keyword `rules`:
 - `regexp: string`  
 - `in: Array<string>`  
 - `notIn: Array<string>`  
+- `min: number`
+- `max: number`

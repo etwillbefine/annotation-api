@@ -10,6 +10,7 @@ describe('validator', function () {
     it('should validate length constraint', testLengthValidation);
     it('should map the validation method to constraint', testConstraintsValidate);
     it('should validate in and notIn constraint', testConstraintsInOrNotIn);
+    it('should validate min and max constraint', testMinAndMaxConstraint);
 });
 
 function testEqualValidation() {
@@ -98,4 +99,27 @@ function testConstraintsInOrNotIn() {
 
     expect(notInFilter.validate(notInFilter)).toBeTruthy();
     expect(notInFilter.validate(notInFilter)).toBeFalsy();
+}
+
+function testMinAndMaxConstraint() {
+    var data = [[ 5 ], [ 1 ], [ 15 ], [ 50 ]];
+    /** @type {Constraint} */
+    var minFilter = getFilter('min');
+    /** @type {Constraint} */
+    var maxFilter = getFilter('max');
+
+    spyOn(minFilter, 'getValue').and.returnValue(5);
+    spyOn(minFilter, 'getContent').and.callFake(function () {
+        return data.shift();
+    });
+
+    spyOn(maxFilter, 'getValue').and.returnValue(15);
+    spyOn(maxFilter, 'getContent').and.callFake(function () {
+        return data.shift();
+    });
+
+    expect(minFilter.validate(minFilter)).toBeTruthy();
+    expect(minFilter.validate(minFilter)).toBeFalsy();
+    expect(maxFilter.validate(maxFilter)).toBeTruthy();
+    expect(maxFilter.validate(maxFilter)).toBeFalsy();
 }

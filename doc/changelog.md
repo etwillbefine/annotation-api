@@ -1,5 +1,12 @@
 # Changelog
 
+#### V.0.3.0
+News:
+- `min` and `max` filter for numbers
+- documentation builder
+- `Response` annotation to define possible responses for documentation
+- allow glob usage when creating annotation api via `require()(..)`
+
 #### V.0.2.2
 New:
 - `RedirectErrorHandler` annotation
