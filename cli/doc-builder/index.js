@@ -11,6 +11,9 @@ var summary = null;
 var routes = 0;
 var generated = 0;
 
+/**
+ * @param {Array<string>} args
+ */
 module.exports = function(args) {
     targetPath = args.shift();
     if (targetPath.charAt(targetPath.length-1) === '/') {
@@ -24,7 +27,10 @@ module.exports = function(args) {
         fs.mkdirSync(targetPath);
     }
     if (!fs.existsSync(targetPath + '/routes')) {
-        fs.mkdir(targetPath + '/routes');
+        fs.mkdirSync(targetPath + '/routes');
+    }
+    if (!args.length) {
+        throw 'Please specify a path where we can search for annotations.\n'+ getUsage();
     }
 
     summary = new DocSummary(targetPath);
@@ -32,10 +38,6 @@ module.exports = function(args) {
     var builder = new DocBuilder();
     var generator = new DocGenerator(targetPath);
     generator.on('generated', routeDocGenerated);
-
-    if (!args.length) {
-        throw 'Please specify a path where we can search for annotations.\n'+ getUsage();
-    }
 
     for (var a = 0; a < args.length; a++) {
         var paths = api.generateFilePaths(args[a]);

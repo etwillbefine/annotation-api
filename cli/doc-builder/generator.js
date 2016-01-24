@@ -29,17 +29,20 @@ function DocGenerator(targetPath) {
         doc = this.parsePayload(doc, route);
         doc = this.parseResponse(doc, route);
         doc = this.parseSecurity(doc, route);
+        doc = this.replaceSpecialChars(doc, route);
 
-        while (doc.indexOf('%route%') != -1 && doc.indexOf('%method%') != -1 && doc.indexOf('\n\n') != -1) {
-            doc = doc.replace('%route%', route.route);
-            doc = doc.replace('%method%', route.method.toUpperCase());
-            doc = doc.replace('\n\n', '\n');
+        var braces = /(\(|\))/g;
+        var sanitizedRoute = route.route.replace(/\//g, '-').slice(1);
+        var path = targetPath + '/routes/' + sanitizedRoute + '___' + route.method + '.md';
+        while (path.indexOf(':') != -1 || braces.test(path) || path.indexOf('?') != -1) {
+            path = path.replace(':', '');
+            path = path.replace('?', '');
+            path = path.replace(braces, '');
         }
 
-        var path = targetPath + '/routes/' + route.route.replace(/\//g, '-').slice(1) + '___' + route.method + '.md';
-
-        fs.writeFile(path, doc);
-        this.emit('generated', { route: route, path: path, content: doc });
+        fs.writeFile(path, doc, function() {
+            this.emit('generated', {route: route, path: path, content: doc});
+        }.bind(this));
     };
 
     /**
@@ -149,6 +152,21 @@ function DocGenerator(targetPath) {
 
         return doc.replace('%security%', security);
     };
+
+    /**
+     * @param {string} doc
+     * @param {ApiRoute} route
+     * @returns {string}
+     */
+    this.replaceSpecialChars = function(doc, route) {
+        while (doc.indexOf('%route%') != -1 || doc.indexOf('%method%') != -1 || doc.indexOf('\n\n') != -1) {
+            doc = doc.replace('%route%', route.route);
+            doc = doc.replace('%method%', route.method.toUpperCase());
+            doc = doc.replace('\n\n', '\n');
+        }
+
+        return doc;
+    }
 
 }
 
