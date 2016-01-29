@@ -39,10 +39,20 @@ module.exports.route = (req, res) => {
 - Run `npm install`
 - Run `npm start`
 
-#### Example
+## Usage
+
+```js
+var app = require('express')();
+var api = require('annotation-api')(app);
+api.setApiPrefix('/my-base-url');
+api.generate(__dirname + '/actions/**/*.js', callback);
+api.generate([ __dirname + '/my-file.js' ]);
+```
+
+### Example
 Can be found [here](/sample/sample.js)
 
-#### Doc-Builder
+### Doc-Builder
 [Create a documentation via CLI](doc/doc-builder.md)
 
 #### Tests
