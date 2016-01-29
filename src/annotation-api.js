@@ -3,6 +3,7 @@
 var ApiGenerator = require('./generator/generator');
 var RequestListener = require('./dispatcher/listener');
 var SecurityContext = require('./security');
+var ReferenceContainer = require('./references');
 var HTTPServer = require('./http');
 var path = require('path');
 
@@ -17,7 +18,8 @@ function AnnotationApi(app, prefix, isEnabled) {
         app = new HTTPServer(null, isEnabled).getApp();
     }
 
-    var generator = new ApiGenerator(prefix);
+    var container = new ReferenceContainer();
+    var generator = new ApiGenerator(prefix, container);
     var securityContext = new SecurityContext();
 
     /**
@@ -102,6 +104,27 @@ function AnnotationApi(app, prefix, isEnabled) {
      */
     this.getGenerator = function() {
         return generator;
+    };
+
+    /**
+     * The referenced object must provide "public" properties with default values.
+     * if (reference[property] === null || typeof reference[property] === 'undefined') returns true the "required" option will be disabled
+     * result of typeof reference[property] will be used as type hint (default: string).
+     *
+     * If you want to define custom validators for the referenced object, you can add a public property named __validation
+     * __validation can contain an object same as the passed objects to @Body or @Query annotation.
+     * Whenever adding this property, no further (or regular) rules will be applied expect fields added with @Body annotation.
+     *
+     * Please note:
+     *  All rules or fields from your referenced object will be applied as "body payload".
+     *  Nested objects in your referenced object will be ignored and simplified to "type=object"
+     *  Usage: @Append("{name}.class");
+     *
+     * @param {{}|any} reference
+     * @param {string} name
+     */
+    this.addReference = function(reference, name) {
+        container.addReference(reference, name);
     };
 
 }

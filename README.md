@@ -22,7 +22,9 @@ Read the [Changelog](/doc/changelog.md).
 /**
  * es6 example
  * @Method("route");
- * @Route("/route");
+ * @Route("/somewhere");
+ * @HTTP("POST");
+ * @Append("MyTransferObject.class");
  * @Query({ ... });
  * @Security("is_authenticated");
  * @RedirectErrorHandler("/err");
@@ -32,15 +34,16 @@ module.exports.route = (req, res) => {
 };
 ```
 
-## Configuration
-By default we use a prefix foreach route. You can change the prefix, using `generator.setApiPrefix('')`.  
-You have to run `npm install`, before you are able to use this module.
+## Installation
+- Clone this repository
+- Run `npm install`
+- Run `npm start`
 
 #### Example
 Can be found [here](/sample/sample.js)
 
 #### Doc-Builder
-[Read more](doc/doc-builder.md)
+[Create a documentation via CLI](doc/doc-builder.md)
 
 #### Tests
 Execute the tests, using `npm test`.

@@ -1,5 +1,10 @@
 # Changelog
 
+#### V.0.3.1
+News:
+- `Append` annotation [..read more](annotations.md#L23)
+- documentation update
+
 #### V.0.3.0
 News:
 - `min` and `max` filter for numbers
