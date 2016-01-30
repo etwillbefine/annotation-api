@@ -5,11 +5,12 @@ var AnnotationTranslator = require('./translator');
 
 /**
  * @param {string|null} prefix
+ * @param {ClassReferenceContainer} referenceContainer
  * @constructor
  */
-function APIGenerator(prefix) {
+function APIGenerator(prefix, referenceContainer) {
 
-    var translator = new AnnotationTranslator();
+    var translator = new AnnotationTranslator(referenceContainer);
     var appPrefix = prefix || '/api';
     var routes = [];
 

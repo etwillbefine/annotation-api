@@ -20,13 +20,21 @@ Define the required post parameters.
 Accepts a json object, to define the validation rules.  
 Take a look to our [example](/test/sample.js)
 
-`@CustomErrorHandler();`:  
-If you add this annotation to your route definition, you will get a list of errors as the third parameter from your callback. 
-In this case our controller will not reject the request. Feel free to send a customized response.
+`@Append("MyClass.class");`:  
+Append properties from an custom object:  
+Add custom class or object:
+```
+api.addReference(myObject, 'MyClass');
+```
+For further information [read here](/src/annotation-api.js#L109)
 
-`@RedirectErrorHandler("/goto/%code%/%message%");`:
+`@CustomErrorHandler();`:  
+When using this annotation, you will get a list of errors as the third parameter from your callback. 
+In this case, our controller will not reject the request. Feel free to send a customized response.
+
+`@RedirectErrorHandler("/goto/%code%/%message%");`:  
 If you want to redirect in the case of an error, you can add this annotation. 
-It is possible to redirect to route which contains the error code and message.
+It is possible to redirect to a route which contains the error code or message.
 This is very useful, when you want to throw a customized authentication error:
 ```js
 generator.addSecurityMethod('my_authenticator', function(request, callback) {
@@ -87,8 +95,25 @@ You can add the `authenticator` property, when using these methods, to specify y
 As an alternative to a sessionStorage or the custom methods, you can use `express-session`.
 We'll test whether the session exists on `request.session` (first check).
 
-[complete example](/sample/sample.js#L65)
+[complete example](/sample/sample.js#L117)
 
 ---
 __Note:__ `;` is required after each annotation.  
 You can also define your custom annotations or doc blocks.
+---
+
+#### Documentation
+You can add the following annotations, to improve the auto generated documentation.
+ 
+`@Response`:  
+When using this annotation you can define the response send from your "controller".
+
+Example:
+```
+@Security("is_authenticated");
+@Response({ status: 401 });
+@Response({ json: { success: true }, contentType: "application/json" });
+@Response({ xml: { success: false }, contentType: "application/xml" });
+...
+```
+

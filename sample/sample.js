@@ -138,3 +138,16 @@ module.exports.testNonExistingSession = function(req, res, next) {};
  * @param next
  */
 module.exports.testRedirect = function(req, res, next) {};
+
+/**
+ * @Method("shouldPostDTO");
+ * @Route("/need-dto");
+ * @HTTP("POST");
+ * @Append("TestDTO.class");
+ *
+ * @param req
+ * @param res
+ */
+module.exports.shouldPostDTO = function(req, res) {
+    res.json(req.body);
+};
