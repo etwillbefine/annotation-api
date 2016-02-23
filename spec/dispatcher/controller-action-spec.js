@@ -3,13 +3,19 @@
 var ControllerAction = require('../../src/dispatcher/controller-action');
 var PayloadParser = require('../../src/filter/parser');
 var responseMock = { json: function() {} };
-var requestMock = { query: { param: 'value' }, body: { param: 'value' }};
-var routeMock = { query: { param: 'expected' }, body: { param: 'expected' }, callable: function() {}, method: 'get' };
+var requestMock = {};
+var routeMock = {};
 
 describe('controller', function() {
+    beforeEach(function() {
+        requestMock = { query: { param: 'value' }, body: { param: 'value' }};
+        routeMock = { query: { param: 'expected' }, body: { param: 'expected' }, callable: function() {}, method: 'get' };
+    });
+
     it('should parse the request and respond', testRouteHandling);
     it('should parse get and post parameters', testParserCalls);
     it('should respond or forward the request', testResponse);
+    it('should use error handler', testErrorHandler);
 });
 
 function testRouteHandling() {
@@ -70,6 +76,19 @@ function testResponse() {
     expect(controller.parseRequest).toHaveBeenCalledTimes(3);
     expect(controller.getParser().getResponse).toHaveBeenCalledTimes(3);
     expect(routeMock.callable).toHaveBeenCalledTimes(2);
+
     expect(errorResponse.getErrors).toHaveBeenCalled();
     expect(responseMock.json).toHaveBeenCalledTimes(1);
+}
+
+function testErrorHandler() {
+    var securityCtxMock = { applySecurity: function() {} };
+    var controller = new ControllerAction(requestMock, responseMock);
+    spyOn(controller, 'handle');
+    spyOn(securityCtxMock, 'applySecurity');
+
+    controller.handleSecureRequest(routeMock, securityCtxMock);
+
+    expect(controller.handle).not.toHaveBeenCalled();
+    expect(securityCtxMock.applySecurity).toHaveBeenCalledWith(routeMock, requestMock, jasmine.any(Function));
 }

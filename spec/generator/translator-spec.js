@@ -2,7 +2,7 @@
 
 var AnnotationTranslator = require('../../src/generator/translator');
 var ReferenceContainer = require('../../src/references');
-var ApiRoute = require('../../src/route');
+var ApiRoute = require('../../src/model/route');
 
 describe('annotation translator', function () {
     it('should map the annotation block to an ApiRoute', testApiRouteMapping);
@@ -37,8 +37,8 @@ function testObjectMapping() {
     container.addReference(new myclass_with_validator(), 'ns.validator');
 
     var translator = new AnnotationTranslator(container);
-    spyOn(translator, 'applyReferencedObject').and.callThrough();
-    spyOn(translator, 'applyReferencedField').and.callThrough();
+    spyOn(container, 'mapFields').and.callThrough();
+    spyOn(container, 'mapUnspecifiedField').and.callThrough();
 
     var route = translator.translate([
         { key: 'Body', value: { body_prop: { type: 'number' }}},
@@ -46,8 +46,8 @@ function testObjectMapping() {
         { key: 'Append', value: 'ns.validator.class' }
     ]);
 
-    expect(translator.applyReferencedObject).toHaveBeenCalledTimes(2);
-    expect(translator.applyReferencedField).toHaveBeenCalledTimes(3);
+    expect(container.mapFields).toHaveBeenCalledTimes(2);
+    expect(container.mapUnspecifiedField).toHaveBeenCalledTimes(3);
     expect(route.body).toEqual({
         body_prop: { type: 'number' },
         another_prop: { type: 'number', required: true },
