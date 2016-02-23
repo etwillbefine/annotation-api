@@ -7,6 +7,7 @@ const CUSTOM_ERROR_HANDLER = 'CustomErrorHandler';
 const REDIRECT_ERROR_HANDLER = 'RedirectErrorHandler';
 const RESPONSE_ANNOTATION = 'Response';
 const APPEND_PAYLOAD = 'Append';
+const DOC_ANNOTATION = 'Doc';
 var ApiRoute = require('./../model/route');
 var Response = require('./../model/response');
 
@@ -50,6 +51,9 @@ function AnnotationTranslator(referenceContainer) {
                     break;
                 case RESPONSE_ANNOTATION:
                     data.possibleResponses.push(new Response().map(comment.value));
+                    break;
+                case DOC_ANNOTATION:
+                    data.description = comment.value && comment.value + '\n\n';
                     break;
                 case APPEND_PAYLOAD:
                     var reference = comment.value.split('.');

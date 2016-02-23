@@ -29,6 +29,9 @@ function ApiRoute() {
     /** @type {Array<Response>} */
     this.possibleResponses = [];
 
+    /** @type {string} */
+    this.description = '';
+
 }
 
 /**

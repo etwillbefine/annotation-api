@@ -13,7 +13,7 @@
   "author": "Tim Gatzemeier <it@public-enterprise.de>",
   "dependencies": {
     "glob": "~6.0",
-    "annotation": "~0.1"
+    "annotation": "git://github.com/gquental/node-annotation.git#e8b71ac"
   },
   "devDependencies": {
     "express": "~4.0",

@@ -1,4 +1,6 @@
 #### HTTP %method% %route%
+%description%
+
 %security%
 //block_get
 __Query:__

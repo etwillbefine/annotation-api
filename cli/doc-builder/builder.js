@@ -6,7 +6,9 @@ var AnnotationTranslator = require('../../src/generator/translator');
 
 function DocBuilder() {
 
-    var translator = new AnnotationTranslator();
+    var translator = new AnnotationTranslator({
+        mapFields: function(obj) { return obj; }
+    });
 
     this.build = function(filePath, callback) {
         if (!fs.lstatSync(filePath).isFile()) {
