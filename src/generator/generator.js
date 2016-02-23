@@ -5,7 +5,7 @@ var AnnotationTranslator = require('./translator');
 
 /**
  * @param {string|null} prefix
- * @param {ClassReferenceContainer} referenceContainer
+ * @param {ReferenceContainer} referenceContainer
  * @constructor
  */
 function APIGenerator(prefix, referenceContainer) {

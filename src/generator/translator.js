@@ -7,10 +7,11 @@ const CUSTOM_ERROR_HANDLER = 'CustomErrorHandler';
 const REDIRECT_ERROR_HANDLER = 'RedirectErrorHandler';
 const RESPONSE_ANNOTATION = 'Response';
 const APPEND_PAYLOAD = 'Append';
-var ApiRoute = require('./../route');
+var ApiRoute = require('./../model/route');
+var Response = require('./../model/response');
 
 /**
- * @param {ClassReferenceContainer} referenceContainer
+ * @param {ReferenceContainer} referenceContainer
  * @constructor
  */
 function AnnotationTranslator(referenceContainer) {
@@ -48,57 +49,20 @@ function AnnotationTranslator(referenceContainer) {
                     data.security = comment.value;
                     break;
                 case RESPONSE_ANNOTATION:
-                    data.possibleResponses.push(comment.value);
+                    data.possibleResponses.push(new Response().map(comment.value));
                     break;
                 case APPEND_PAYLOAD:
                     var reference = comment.value.split('.');
                     if (reference.pop() !== 'class') {
-                        throw new Error('Append must provider a class name. Example: my_namespace.my_class.class');
+                        throw new Error('Append must provide a class name. Example: my_namespace.my_class.class');
                     }
 
-                    this.applyReferencedObject(data, reference.join('.'));
+                    data.body = referenceContainer.mapFields(data.body, reference.join('.'));
                     break;
             }
         }.bind(this));
 
         return data;
-    };
-
-    /**
-     * @param {ApiRoute} data
-     * @param {string} name default constructor name when exists
-     */
-    this.applyReferencedObject = function(data, name) {
-        var reference = referenceContainer.getReference(name || ((data.constructor && data.constructor.name) || ''));
-        if (!reference) {
-            return;
-        }
-
-        if (reference.__validation) {
-            Object.keys(reference.__validation).forEach(function (key) {
-                data.body[key] = reference.__validation[key];
-            });
-            return;
-        }
-
-        for (var prop in reference) {
-            if (reference.hasOwnProperty(prop)) {
-                this.applyReferencedField(data, prop, reference[prop]);
-            }
-        }
-    };
-
-    /**
-     * @param {ApiRoute} data
-     * @param {string} name
-     * @param {any} value
-     */
-    this.applyReferencedField = function(data, name, value) {
-        var issetValue = (value !== null && typeof value !== 'undefined');
-
-        data.body[name] = {};
-        data.body[name].type = (issetValue && typeof value) || 'string';
-        data.body[name].required = issetValue;
     };
 
 }
