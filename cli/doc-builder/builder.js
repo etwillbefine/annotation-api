@@ -21,7 +21,7 @@ function DocBuilder() {
             var apiRoutes = [];
 
             Object.keys(comments).forEach(function (action) {
-                apiRoutes.push(translator.translate(comments[action]));
+                apiRoutes.push(translator.translate(comments[action], true));
             });
 
             callback(apiRoutes);

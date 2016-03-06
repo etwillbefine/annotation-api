@@ -20,10 +20,11 @@ function AnnotationTranslator(referenceContainer) {
 
     /**
      * @param annotations
+     * @param {boolean} hiddenFields
      * @returns {ApiRoute}
      * @throws {Error}
      */
-    this.translate = function(annotations) {
+    this.translate = function(annotations, hiddenFields) {
         var data = new ApiRoute();
 
         annotations.forEach(function (comment) {
@@ -50,9 +51,11 @@ function AnnotationTranslator(referenceContainer) {
                     data.security = comment.value;
                     break;
                 case RESPONSE_ANNOTATION:
+                    if (!hiddenFields) return;
                     data.possibleResponses.push(new Response().map(comment.value));
                     break;
                 case DOC_ANNOTATION:
+                    if (!hiddenFields) return;
                     data.description = comment.value && comment.value + '\n\n';
                     break;
                 case APPEND_PAYLOAD:

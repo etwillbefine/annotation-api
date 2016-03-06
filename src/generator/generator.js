@@ -51,7 +51,7 @@ function APIGenerator(prefix, referenceContainer) {
             var apiRoutes = [];
 
             Object.keys(comments).forEach(function (action) {
-                var routeInfo = translator.translate(comments[action]);
+                var routeInfo = translator.translate(comments[action], false);
                 routeInfo.route = appPrefix + routeInfo.route;
                 routeInfo.callable = apiFile[action];
 
