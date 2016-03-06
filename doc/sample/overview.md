@@ -3,9 +3,9 @@
 - [/err](routes/err.md)
 - [/valid-auth](routes/valid-auth.md)
 - [/invalid-auth](routes/invalid-auth.md)
-- [/invalid-session](routes/invalid-session.md)
 - [/not-in](routes/not-in.md)
 - [/redirect](routes/redirect.md)
+- [/invalid-session](routes/invalid-session.md)
 - [/need-dto](routes/need-dto.md)
 
 9 route definitions available.  
