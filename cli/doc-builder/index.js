@@ -36,8 +36,7 @@ module.exports = function(args) {
     summary = new DocSummary(targetPath);
     var api = new AnnotationApi(null, null, false);
     var builder = new DocBuilder();
-    var generator = new DocGenerator(targetPath);
-    generator.on('generated', routeDocGenerated);
+    var generator = new DocGenerator(targetPath, routeDocGenerated);
 
     for (var a = 0; a < args.length; a++) {
         var paths = api.generateFilePaths(args[a]);
@@ -61,7 +60,7 @@ module.exports = function(args) {
 
 function routeDocGenerated(data) {
     generated++;
-    console.log(generated + '. documentation generated (' + data.route.route + '): ' + data.path);
+    console.log(generated + '. documentation generated (' + data.route.route + ')');
 
     var urlParts = data.route.route.replace('/', '').split('/');
     summary.add(urlParts.shift(), data);

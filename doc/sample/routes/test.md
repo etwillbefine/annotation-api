@@ -9,8 +9,6 @@ __Query:__
     }
 }
 ```
-
-
 __Request:__
 ```json
 {
@@ -45,8 +43,7 @@ __Request:__
     }
 }
 ```
-
-
+Status: 200
 #### HTTP GET /test
 
 __Query:__
@@ -54,7 +51,11 @@ __Query:__
 {
     "test": {
         "required": true,
-        "type": "number"
+        "type": "number",
+        "rules": {
+            "min": 1,
+            "max": 10
+        }
     },
     "number": {
         "required": true,
@@ -64,6 +65,4 @@ __Query:__
     }
 }
 ```
-
-
-
+Status: 200

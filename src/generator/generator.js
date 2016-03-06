@@ -5,7 +5,7 @@ var AnnotationTranslator = require('./translator');
 
 /**
  * @param {string|null} prefix
- * @param {ClassReferenceContainer} referenceContainer
+ * @param {ReferenceContainer} referenceContainer
  * @constructor
  */
 function APIGenerator(prefix, referenceContainer) {
@@ -51,7 +51,7 @@ function APIGenerator(prefix, referenceContainer) {
             var apiRoutes = [];
 
             Object.keys(comments).forEach(function (action) {
-                var routeInfo = translator.translate(comments[action]);
+                var routeInfo = translator.translate(comments[action], false);
                 routeInfo.route = appPrefix + routeInfo.route;
                 routeInfo.callable = apiFile[action];
 

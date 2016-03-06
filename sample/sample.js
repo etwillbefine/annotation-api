@@ -118,6 +118,7 @@ module.exports.testInvalidAuth = function(req, res, next, err) {
  * authenticator is optional!
  *
  * @Method("testNonExistingSession");
+ * @Doc("Test whether the session exists, using the is_fully_authenticated method.");
  * @Route("/invalid-session");
  * @Security({ "method": "session_exists", "session": "my_session", "authenticator": "is_fully_authenticated" });
  *
@@ -141,6 +142,7 @@ module.exports.testRedirect = function(req, res, next) {};
 
 /**
  * @Method("shouldPostDTO");
+ * @Doc("When requesting this resource data from TestDTO is required.");
  * @Route("/need-dto");
  * @HTTP("POST");
  * @Append("TestDTO.class");

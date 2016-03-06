@@ -6,9 +6,10 @@ const Templates = {
 
 /**
  * @param {string} targetPath
+ * @param {Function} finished
  * @constructor
  */
-function DocGenerator(targetPath) {
+function DocGenerator(targetPath, finished) {
     "use strict";
 
     /**
@@ -24,6 +25,7 @@ function DocGenerator(targetPath) {
      * @param {ApiRoute} route
      */
     this.generateRouteDoc = function(route) {
+        console.log(route.method.toUpperCase() + ': ' + route.route);
         var doc = Templates.md.toString() + '';
         doc = this.parseTemplate(doc, route);
         doc = this.parsePayload(doc, route);
@@ -40,8 +42,9 @@ function DocGenerator(targetPath) {
             path = path.replace(braces, '');
         }
 
+        doc = this.addDescription(doc, route);
         fs.writeFile(path, doc, function() {
-            this.emit('generated', {route: route, path: path, content: doc});
+            finished({route: route, path: path, content: doc});
         }.bind(this));
     };
 
@@ -71,7 +74,7 @@ function DocGenerator(targetPath) {
         }
 
         if (!route.possibleResponses.length && !route.redirectErrorHandler) {
-            doc = doc.replace(/^(\/\/block_response)[\s\S]*(\/\/endblock_response)$/igm, '');
+            doc = doc.replace(/^(\/\/block_response)[\s\S]*(\/\/endblock_response)$/igm, 'Status: 200');
         }
         else {
             doc = doc.replace('//block_response', '');
@@ -166,12 +169,18 @@ function DocGenerator(targetPath) {
         }
 
         return doc;
-    }
+    };
+
+    /**
+     * @param {string} doc
+     * @param {ApiRoute} route
+     * @returns {string}
+     */
+    this.addDescription = function(doc, route) {
+        return doc.replace('%description%', route.description || '');
+    };
 
 }
-
-var EventEmitter = require('events').EventEmitter;
-DocGenerator.prototype = new EventEmitter();
 
 /**
  * @type {DocGenerator}
