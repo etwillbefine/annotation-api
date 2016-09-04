@@ -12,7 +12,7 @@ function SessionStorage(sessionInterface) {
             return;
         }
 
-        if (!sessionInterface.get.length || sessionInterface.get.length > 1) {
+        if (sessionInterface.get.length > 1) {
             sessionInterface.get(sessionName, callback);
             return;
         }
@@ -24,7 +24,13 @@ function SessionStorage(sessionInterface) {
             return;
         }
 
-        query.exec(callback);
+        if (query && typeof query.exec === 'function') {
+            query.exec(callback);
+            return;
+        }
+
+        // Treat query as result
+        callback(null, query);
     };
 
     /**
@@ -47,7 +53,6 @@ function SessionStorage(sessionInterface) {
     this.hasStorage = function() {
         return sessionInterface && typeof sessionInterface.get === 'function';
     };
-
 }
 
 /**
