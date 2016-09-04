@@ -1,6 +1,6 @@
 {
   "name": "annotation-api",
-  "version": "0.3.2",
+  "version": "1.0.0",
   "description": "Provides routing definition with annotations (for express or our built in server)",
   "keywords": [
     "annotation",
@@ -16,10 +16,10 @@
     "annotation": "git://github.com/gquental/node-annotation.git#e8b71ac"
   },
   "devDependencies": {
-    "express": "~4.0",
     "body-parser": "~1.14",
-    "jasmine-core": "~2.4",
-    "jasmine": "~2.4"
+    "express": "~4.0",
+    "jasmine": "^2.4.1",
+    "jasmine-core": "~2.4"
   },
   "directories": {
     "doc": "doc",
