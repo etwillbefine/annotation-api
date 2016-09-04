@@ -51,10 +51,11 @@ function AuthCheck(storage, request, callables, callback) {
 
         if (request && typeof request.session == 'object') {
             var issetSession = authMethod.session && request.session[authMethod.session];
-            var error = (issetSession) ? null : { message: 'Missing session ' + authMethod.session, code: 405 };
 
-            resolve(error, request.session[authMethod.session]);
-            return;
+            if (issetSession) {
+                resolve(null, request.session[authMethod.session]);
+                return;
+            }
         }
 
         if (storage.hasStorage()) {

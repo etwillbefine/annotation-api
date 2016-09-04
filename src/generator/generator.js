@@ -11,7 +11,7 @@ var AnnotationTranslator = require('./translator');
 function APIGenerator(prefix, referenceContainer) {
 
     var translator = new AnnotationTranslator(referenceContainer);
-    var appPrefix = prefix || '/api';
+    var appPrefix = (prefix != null) ? prefix : '/api';
     var routes = [];
 
     /**
