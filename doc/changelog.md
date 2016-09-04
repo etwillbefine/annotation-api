@@ -1,5 +1,10 @@
 # Changelog
 
+#### V.1.0.0
+News:
+- First stable, complete version
+- Sync access on session storage without .exec
+
 #### V.0.3.1
 News:
 - `Append` annotation [..read more](annotations.md#L23)
